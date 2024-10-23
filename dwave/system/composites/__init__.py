@@ -12,6 +12,12 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
+"""
+:std:doc:`dimod composites <oceandocs:docs_dimod/intro/intro_samplers>` that 
+provide layers of pre- and post-processing (e.g., :term:`minor-embedding`) when 
+using D-Wave quantum computers.
+"""
+
 from dwave.system.composites.cutoffcomposite import *
 from dwave.system.composites.embedding import *
 from dwave.system.composites.tiling import *

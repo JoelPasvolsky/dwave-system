@@ -4,9 +4,9 @@
 Samplers
 ========
 
-.. currentmodule:: dwave.system.samplers
-
 .. automodule:: dwave.system.samplers.__init__
+
+.. currentmodule:: dwave.system.samplers
 
 .. autosummary:: 
     :recursive:
