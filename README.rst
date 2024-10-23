@@ -11,13 +11,13 @@
 .. image:: https://circleci.com/gh/dwavesystems/dwave-system.svg?style=shield
    :target: https://circleci.com/gh/dwavesystems/dwave-system
 
-.. |tm| unicode::  U+2122
-
 ============
 dwave-system
 ============
 
 .. index-start-marker
+
+.. |tm| unicode::  U+2122
 
 ``dwave-system`` is documented here: Ocean\ |tm|
 `SDK documentation <https://docs.ocean.dwavesys.com/en/stable/index.html>`_. 

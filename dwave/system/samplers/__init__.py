@@ -12,6 +12,23 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
+r"""
+A :term:`sampler` accepts a problem in :term:`quadratic model` (e.g., BQM, CQM) or
+:term:`nonlinear model` format and returns variable assignments.
+Samplers generally try to find minimizing values but can also sample from
+distributions defined by the problem.
+
+These samplers use a quantum computer, either directly or as part of a
+:term:`hybrid` algorithm. 
+
+Sampler are are non-blocking. For quadratic models, returned
+:class:`~dimod.SampleSet`\ s are constructed from a
+:class:`~concurrent.futures.Future`-like object that is resolved on the first
+read of any of its properties; for example, by printing the results. Your code
+can query its status with the :meth:`~dimod.SampleSet.done` method or ensure
+resolution with the :meth:`~dimod.SampleSet.resolve` method.
+"""
+
 from dwave.system.samplers.clique import *
 from dwave.system.samplers.dwave_sampler import *
 from dwave.system.samplers.leap_hybrid_sampler import *

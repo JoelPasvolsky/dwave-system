@@ -6,12 +6,16 @@ Samplers
 
 .. currentmodule:: dwave.system.samplers
 
+.. automodule:: dwave.system.samplers.__init__
+
 .. autosummary:: 
+    :recursive:
+    :template: custom-class-template.rst
     :toctree: generated/
 
-    DWaveSampler
     DWaveCliqueSampler
-    LeapHybridSampler
+    DWaveSampler
     LeapHybridCQMSampler
-    LeapHybridNLSampler
     LeapHybridDQMSampler
+    LeapHybridNLSampler
+    LeapHybridSampler
