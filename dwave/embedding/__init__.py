@@ -12,6 +12,14 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
+"""
+Provides functions that map :term:`binary quadratic model`\ s and samples between
+a :term:`source` :term:`graph` and a :term:`target` graph.
+
+For an introduction to :term:`minor-embedding`, see
+:std:doc:`Minor-Embedding <oceandocs:concepts/embedding>`.
+"""
+
 import minorminer  # into this namespace
 import dwave.embedding.chimera
 import dwave.embedding.pegasus
