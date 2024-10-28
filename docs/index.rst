@@ -6,43 +6,45 @@
 dwave-system
 ============
 
+.. this file is used for testing docbuilds locally. For production
+    documentation, update the sdk_index.rst file. 
+
 .. include:: README.rst
-   :start-after: index-start-marker
-   :end-before: index-end-marker
+    :start-after: index-start-marker
+    :end-before: index-end-marker
+
+(For explanations of the terminology, see the
+:ref:`section_concepts_glossary` section.)
 
 Documentation
--------------
+=============
+
+.. note:: For updates to production documentation, ensure that the sdk_index.rst 
+    file is also updated.
 
 .. sdk-start-marker
 
 .. toctree::
-  :maxdepth: 1
+    :maxdepth: 2
 
-  reference/index
+    samplers
+    composites
+    embedding
+    utilities
+    warnings
 
 .. sdk-end-marker
 
 .. toctree::
-  :caption: Code
-  :maxdepth: 1
+    :caption: Code
+    :maxdepth: 1
 
-  Source <https://github.com/dwavesystems/dwave-system>
-  installation
-  license
+    Source <https://github.com/dwavesystems/dwave-system>
+    installation
+    license
 
-.. toctree::
-  :caption: D-Wave's Ocean Software
-  :maxdepth: 1
+Indices and tables
+==================
 
-  Ocean Home <https://ocean.dwavesys.com/>
-  Ocean Documentation <https://docs.ocean.dwavesys.com>
-  Ocean Glossary <https://docs.ocean.dwavesys.com/en/stable/concepts/index.html>
-
-.. toctree::
-  :caption: D-Wave
-  :maxdepth: 1
-
-  D-Wave <https://www.dwavesys.com>
-  Leap <https://cloud.dwavesys.com/leap/>
-  D-Wave System Documentation <https://docs.dwavesys.com/docs/latest/index.html>
-
+* :ref:`genindex`
+* :ref:`modindex`
