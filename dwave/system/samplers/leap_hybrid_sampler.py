@@ -74,12 +74,12 @@ class LeapHybridSampler(dimod.Sampler, _ClosableClientBaseMixin):
 
     You can configure your :term:`solver` selection and usage by setting parameters,
     hierarchically, in a configuration file, as environment variables, or
-    explicitly as input arguments, as described in
-    `D-Wave Cloud Client <https://docs.ocean.dwavesys.com/en/stable/docs_cloud/sdk_index.html>`_.
+    explicitly as input arguments, as described in the
+    :ref:`D-Wave Cloud Client <index_cloud>` package.
 
     :ref:`dwave-cloud-client <index_cloud>`'s
     :meth:`~dwave.cloud.client.Client.get_solvers` method filters solvers you have
-    access to by `solver properties <https://docs.dwavesys.com/docs/latest/c_solver_properties.html>`_
+    access to by :ref:`solver properties <opt_solver_bqm_properties>`
     ``category=hybrid`` and ``supported_problem_type=bqm``. By default, online
     hybrid BQM solvers are returned ordered by latest ``version``.
 
@@ -156,7 +156,7 @@ class LeapHybridSampler(dimod.Sampler, _ClosableClientBaseMixin):
     def properties(self) -> Dict[str, Any]:
         """Solver properties as returned by a SAPI query.
 
-        `Solver properties <https://docs.dwavesys.com/docs/latest/c_solver_properties.html>`_
+        :ref:`Solver properties <opt_solver_bqm_properties>`
         are dependent on the selected solver and subject to change.
         """
         try:
@@ -171,7 +171,7 @@ class LeapHybridSampler(dimod.Sampler, _ClosableClientBaseMixin):
         keyword parameters accepted by a SAPI query and values are lists of properties in
         :attr:`~dwave.system.samplers.LeapHybridSampler.properties` for each key.
 
-        `Solver parameters <https://docs.dwavesys.com/docs/latest/c_solver_parameters.html>`_
+        :ref:`Solver parameters <opt_solver_bqm_properties>`
         are dependent on the selected solver and subject to change.
         """
         try:
@@ -303,12 +303,12 @@ class LeapHybridDQMSampler(_ClosableClientBaseMixin):
 
     You can configure your :term:`solver` selection and usage by setting parameters,
     hierarchically, in a configuration file, as environment variables, or
-    explicitly as input arguments, as described in
-    `D-Wave Cloud Client <https://docs.ocean.dwavesys.com/en/stable/docs_cloud/sdk_index.html>`_.
+    explicitly as input arguments, as described in the
+    :ref:`D-Wave Cloud Client <index_cloud>` package.
 
     :ref:`dwave-cloud-client <index_cloud>`'s
     :meth:`~dwave.cloud.client.Client.get_solvers` method filters solvers you have
-    access to by `solver properties <https://docs.dwavesys.com/docs/latest/c_solver_properties.html>`_
+    access to by :ref:`solver properties <opt_solver_dqm_properties>`
     ``category=hybrid`` and ``supported_problem_type=dqm``. By default, online
     hybrid DQM solvers are returned ordered by latest ``version``.
 
@@ -397,7 +397,7 @@ class LeapHybridDQMSampler(_ClosableClientBaseMixin):
     def properties(self) -> Dict[str, Any]:
         """Solver properties as returned by a SAPI query.
 
-        `Solver properties <https://docs.dwavesys.com/docs/latest/c_solver_properties.html>`_
+        :ref:`Solver properties <opt_solver_dqm_properties>`
         are dependent on the selected solver and subject to change.
         """
         try:
@@ -414,7 +414,7 @@ class LeapHybridDQMSampler(_ClosableClientBaseMixin):
         :attr:`~dwave.system.samplers.LeapHybridDQMSampler.properties` for each
         key.
 
-        `Solver parameters <https://docs.dwavesys.com/docs/latest/c_solver_parameters.html>`_
+        :ref:`Solver parameters <opt_solver_dqm_properties>`
         are dependent on the selected solver and subject to change.
         """
         try:
@@ -552,12 +552,12 @@ class LeapHybridCQMSampler(_ClosableClientBaseMixin):
 
     You can configure your :term:`solver` selection and usage by setting parameters,
     hierarchically, in a configuration file, as environment variables, or
-    explicitly as input arguments, as described in
-    `D-Wave Cloud Client <https://docs.ocean.dwavesys.com/en/stable/docs_cloud/sdk_index.html>`_.
+    explicitly as input arguments, as described in the
+    :ref:`D-Wave Cloud Client <index_cloud>` package.
 
     :ref:`dwave-cloud-client <index_cloud>`'s
     :meth:`~dwave.cloud.client.Client.get_solvers` method filters solvers you have
-    access to by `solver properties <https://docs.dwavesys.com/docs/latest/c_solver_properties.html>`_
+    access to by :ref:`solver properties <opt_solver_cqm_properties>`
     ``category=hybrid`` and ``supported_problem_type=cqm``. By default, online
     hybrid CQM solvers are returned ordered by latest ``version``.
 
@@ -648,7 +648,7 @@ class LeapHybridCQMSampler(_ClosableClientBaseMixin):
     def properties(self) -> Dict[str, Any]:
         """Solver properties as returned by a SAPI query.
 
-        `Solver properties <https://docs.dwavesys.com/docs/latest/c_solver_properties.html>`_
+        :ref:`Solver properties <opt_solver_cqm_properties>`
         are dependent on the selected solver and subject to change.
         """
         try:
@@ -665,7 +665,7 @@ class LeapHybridCQMSampler(_ClosableClientBaseMixin):
         :attr:`~dwave.system.samplers.LeapHybridCQMSampler.properties` for each
         key.
 
-        `Solver parameters <https://docs.dwavesys.com/docs/latest/c_solver_parameters.html>`_
+        :ref:`Solver parameters <opt_solver_cqm_properties>`
         are dependent on the selected solver and subject to change.
         """
         try:
@@ -808,13 +808,13 @@ class LeapHybridNLSampler(_ClosableClientBaseMixin):
 
     You can configure your :term:`solver` selection and usage by setting
     parameters, hierarchically, in a configuration file, as environment
-    variables, or explicitly as input arguments, as described in
-    `D-Wave Cloud Client <https://docs.ocean.dwavesys.com/en/stable/docs_cloud/sdk_index.html>`_.
+    variables, or explicitly as input arguments, as described in the
+    :ref:`D-Wave Cloud Client <index_cloud>` package.
 
     :ref:`dwave-cloud-client <index_cloud>`'s
     :meth:`~dwave.cloud.client.Client.get_solvers` method filters solvers you
     have access to by
-    `solver properties <https://docs.dwavesys.com/docs/latest/c_solver_properties.html>`_
+    :ref:`solver properties <opt_solver_nl_properties>`
     ``category=hybrid`` and ``supported_problem_type=nl``. By default, online
     hybrid nonlinear-model solvers are returned ordered by latest ``version``.
 
@@ -896,7 +896,7 @@ class LeapHybridNLSampler(_ClosableClientBaseMixin):
     def properties(self) -> Dict[str, Any]:
         """Solver properties as returned by a SAPI query.
 
-        `Solver properties <https://docs.dwavesys.com/docs/latest/c_solver_properties.html>`_
+        :ref:`Solver properties <opt_solver_nl_properties>`
         are dependent on the selected solver and subject to change.
         """
         try:
@@ -912,7 +912,7 @@ class LeapHybridNLSampler(_ClosableClientBaseMixin):
         properties in :attr:`~dwave.system.samplers.LeapHybridNLSampler.properties`
         for each key.
 
-        `Solver parameters <https://docs.dwavesys.com/docs/latest/c_solver_parameters.html>`_
+        :ref:`Solver parameters <opt_solver_nl_properties>`
         are dependent on the selected solver and subject to change.
         """
         try:

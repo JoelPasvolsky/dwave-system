@@ -23,7 +23,7 @@ the QPU in one call.
 For example, a single Chimera unit cell could be tiled over 600 times on a
 fully-yielded Advantage system.
 
-See `Ocean Glossary <https://docs.ocean.dwavesys.com/en/stable/concepts/index.html>`_
+See the :ref:`index_concepts` section
 for explanations of technical terms in descriptions of Ocean tools.
 """
 
@@ -92,7 +92,7 @@ class TilingComposite(dimod.Sampler, dimod.Composite, dimod.Structured):
        >>> len(sampleset)> 1
        True
 
-    See `Ocean Glossary <https://docs.ocean.dwavesys.com/en/stable/concepts/index.html>`_
+    See the :ref:`index_concepts` section
     for explanations of technical terms in descriptions of Ocean tools.
 
     """
@@ -284,7 +284,7 @@ class TilingComposite(dimod.Sampler, dimod.Composite, dimod.Structured):
             >>> len(sampleset) > 1    
             True
 
-        See `Ocean Glossary <https://docs.ocean.dwavesys.com/en/stable/concepts/index.html>`_
+        See the :ref:`index_concepts` section
         for explanations of technical terms in descriptions of Ocean tools.
 
         """
