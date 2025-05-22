@@ -83,3 +83,51 @@ intersphinx_mapping = {'python': ('https://docs.python.org/3', None),
     'networkx': ('https://networkx.github.io/documentation/stable/', None),
     'dwave': ('https://docs.dwavequantum.com/en/latest/', None),
     }
+    
+
+
+rst_epilog = """
+.. |copy| unicode:: U+000A9 .. COPYRIGHT SIGN
+.. |deg| unicode:: U+00B0
+.. |nbsp| unicode:: 0xA0    .. non-breaking space
+.. |nb-| unicode:: U+2011  .. Non-breaking hyphen (e.g., "D |nb-| Wave")
+    :trim:
+.. |reg| unicode:: U+000AE .. REGISTERED SIGN
+.. |tm| unicode::  U+2122
+.. |Darr| unicode:: U+02193 .. DOWNWARDS ARROW from docutils/parsers/rst/include/isonum.txt
+.. |Uarr| unicode:: U+02191 .. UPWARDS ARROW from docutils/parsers/rst/include/isonum.txt
+
+.. |array-like| replace:: array-like    .. used in dwave-optimization
+.. _array-like: https://numpy.org/devdocs/glossary.html#term-array_like
+
+.. |adv2| unicode:: Advantage2
+.. |adv2_tm| unicode:: Advantage2 U+2122
+.. |cloud| unicode:: Leap
+.. _cloud: https://cloud.dwavesys.com/leap
+.. |cloud_tm| unicode:: Leap U+2122
+.. _cloud_tm: https://cloud.dwavesys.com/leap
+.. |dwave_2kq| unicode:: D-Wave U+00A0 2000Q
+.. |dwave_5kq| unicode:: Advantage
+.. |dwave_5kq_tm| unicode:: Advantage U+2122
+.. |dwave_short| unicode:: D-Wave
+.. _dwave_short: https://dwavequantum.com
+.. |dwave_short_tm| unicode:: D-Wave U+2122 U+0020
+.. |dwave_system| unicode:: D-Wave U+00A0 System
+.. |ocean_tm| unicode:: Ocean U+2122
+.. |ocean_sdk| replace:: Ocean software
+.. _ocean_sdk: https://github.com/dwavesystems/dwave-ocean-sdk
+
+.. |dwave_launch_tm| unicode:: D U+2011 Wave U+00A0 Launch U+2122
+.. _dwave_launch_tm: https://www.dwavesys.com/solutions-and-products/professional-services
+.. |dwave_launch| unicode:: D U+2011 Wave U+00A0 Launch
+.. _dwave_launch: https://www.dwavesys.com/solutions-and-products/professional-services
+.. |dwave_learn_tm| unicode:: D U+2011 Wave U+00A0 Learn U+2122
+.. _dwave_learn_tm: https://training.dwavequantum.com
+.. |dwave_learn| unicode:: D U+2011 Wave U+00A0 Learn
+.. _dwave_learn: https://training.dwavequantum.com
+
+.. |support_email| replace:: D-Wave Customer Support
+.. _support_email: support@dwavesys.com
+
+.. |doc_operations| replace:: *D-Wave Quantum Computer Operations*
+"""
