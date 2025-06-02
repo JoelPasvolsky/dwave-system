@@ -11,4 +11,5 @@ API Reference
     composites
     embedding
     utilities
+    exceptions
     warnings

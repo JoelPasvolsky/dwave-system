@@ -17,9 +17,16 @@ read of any of its properties; for example, by printing the results. Your code c
 query its status with the :meth:`~dimod.SampleSet.done` method or ensure resolution
 with the :meth:`~dimod.SampleSet.resolve` method.
 
-Other Ocean packages provide additional samplers; for example,
-:ref:`dimod <index_dimod>` provides samplers for testing
-your code.
+The :ref:`Ocean <index_ocean_sdk>` SDK provides samplers for various uses.
+
+*   Submitting problems directly to a quantum computer (the ``dwave-system``
+    package); for example, the :class:`.DWaveSampler` class
+*   Submitting problems the the `Leap <https://cloud.dwavesys.com/leap/>`_
+    service's :term:`hybrid` solvers (the ``dwave-system`` package); for
+    example, the :class:`.LeapHybridNLSampler` class
+*   Testing your code (the :ref:`dimod <index_dimod>` package)
+*   Solving problems classically (the :ref:`dwave-samplers <index_samplers>`
+    package)
 
 DWaveSampler
 ============

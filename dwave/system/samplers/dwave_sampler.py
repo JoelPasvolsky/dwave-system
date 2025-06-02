@@ -86,25 +86,31 @@ def qpu_graph(topology_type, topology_shape, nodelist, edgelist):
 
 
 class DWaveSampler(dimod.Sampler, dimod.Structured):
-    """A class for using D-Wave quantum computers as samplers for binary quadratic models.
+    r"""Submits binary quadratic models directly to D-Wave quantum computers.
 
-    You can configure your :term:`solver` selection and usage by setting parameters,
-    hierarchically, in a configuration file, as environment variables, or
-    explicitly as input arguments. For more information, see the
+    Linear and quadratic terms of the :term:`binary quadratic model` (BQM) must
+    map directly to qubit and coupler indices of the selected :term:`QPU`.
+    Typically this mapping (:term:`minor-embedding`) is handled by software
+    (e.g., the :class:`.EmbeddingComposite` class) but for small problems can be
+    manual.
+
+    You can configure your :term:`solver` selection and usage by setting
+    parameters, hierarchically, in a configuration file, as environment
+    variables, or explicitly as input arguments. For more information, see the
     :ref:`D-Wave Cloud Client <index_cloud>` package's
     :meth:`~dwave.cloud.client.Client.get_solvers` method. By default, online
-    D-Wave systems are returned ordered by highest number of qubits.
+    QPUs are returned ordered by highest number of qubits.
 
     Args:
         failover (bool, optional, default=False):
-            Signal a failover condition if a sampling error occurs. When ``True``,
-            raises :exc:`~dwave.system.exceptions.FailoverCondition` or
-            :exc:`~dwave.system.exceptions.RetryCondition` on sampleset resolve
-            to signal failover.
+            Signal a failover condition if a sampling error occurs. When
+            ``True``, raises :exc:`~dwave.system.exceptions.FailoverCondition`
+            or :exc:`~dwave.system.exceptions.RetryCondition` on sampleset
+            :meth:`~dimod.SampleSet.resolve` to signal failover.
 
-            Actual failover, i.e. selection of a new solver, has to be handled
-            by the user. A convenience method :meth:`.trigger_failover` is available
-            for this. Note that hardware graphs vary between QPUs, so triggering
+            Actual failover (i.e., selection of a new solver) has to be handled
+            by the user. A convenience method :meth:`.trigger_failover` is
+            available for this. Note that hardware graphs vary between QPUs, so triggering
             failover results in regenerated :attr:`.nodelist`,  :attr:`.edgelist`, 
             :attr:`.properties` and :attr:`.parameters`.
 
