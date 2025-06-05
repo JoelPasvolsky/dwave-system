@@ -117,6 +117,7 @@ class LeapHybridSampler(_ScopedSamplerMixin, dimod.Sampler):
                     order_by='-properties.version')
 
     def __init__(self, **config):
+        """ """ # Empty string used by docbuild
         # strongly prefer hybrid solvers; requires kwarg-level override
         config.setdefault('client', 'hybrid')
 
@@ -358,6 +359,7 @@ class LeapHybridDQMSampler(_ScopedSamplerMixin):
                     order_by='-properties.version')
 
     def __init__(self, **config):
+        """ """ # Empty string used by docbuild
         # strongly prefer hybrid solvers; requires kwarg-level override
         config.setdefault('client', 'hybrid')
 
@@ -603,6 +605,7 @@ class LeapHybridCQMSampler(_ScopedSamplerMixin):
     """
 
     def __init__(self, **config):
+        """ """ # Empty string used by docbuild
         # strongly prefer hybrid solvers; requires kwarg-level override
         config.setdefault('client', 'hybrid')
 
@@ -835,6 +838,7 @@ class LeapHybridNLSampler(_ScopedSamplerMixin):
     """
 
     def __init__(self, **config):
+        """ """ # Empty string used by docbuild
         # strongly prefer hybrid solvers; requires kwarg-level override
         config.setdefault('client', 'hybrid')
 

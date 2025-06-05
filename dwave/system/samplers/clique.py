@@ -213,6 +213,7 @@ class DWaveCliqueSampler(dimod.Sampler):
     def __init__(self, *,
                  failover: bool = False, retry_interval: Number = -1,
                  **config):
+        """ """ # Empty string used by docbuild
         self.child = DWaveSampler(
             failover=failover, retry_interval=retry_interval, **config)
 

@@ -1,4 +1,4 @@
-# Copyright 2018 D-Wave Systems Inc.
+# Copyright 2018 D-Wave
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -184,6 +184,7 @@ class DWaveSampler(dimod.Sampler, dimod.Structured):
 
     """
     def __init__(self, failover=False, retry_interval=-1, **config):
+        """ """ # Empty string used by docbuild
         # strongly prefer QPU solvers; requires kwarg-level override
         config.setdefault('client', 'qpu')
 
