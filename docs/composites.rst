@@ -20,63 +20,20 @@ CutOffs
 Prunes the binary quadratic model (BQM) submitted to the child sampler by retaining
 only interactions with values commensurate with the sampler’s precision.
 
-CutOffComposite
----------------
+The following composites are supported:
+
+*   :class:`.CutOffComposite`
+*   :class:`.PolyCutOffComposite`
 
 .. autoclass:: CutOffComposite
-
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   CutOffComposite.child
-   CutOffComposite.children
-   CutOffComposite.parameters
-   CutOffComposite.properties
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   CutOffComposite.sample
-   CutOffComposite.sample_ising
-   CutOffComposite.sample_qubo
-
-PolyCutOffComposite
--------------------
-
-Prunes the polynomial submitted to the child sampler by retaining
-only interactions with values commensurate with the sampler’s precision.
+    :show-inheritance:
+    :members:
+    :inherited-members:
 
 .. autoclass:: PolyCutOffComposite
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   PolyCutOffComposite.child
-   PolyCutOffComposite.children
-   PolyCutOffComposite.parameters
-   PolyCutOffComposite.properties
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   PolyCutOffComposite.sample_poly
-   PolyCutOffComposite.sample_hising
-   PolyCutOffComposite.sample_hubo
-
-
+    :show-inheritance:
+    :members:
+    :inherited-members:
 
 Embedding
 =========
@@ -87,223 +44,58 @@ Embedding
 
 .. currentmodule:: dwave.system.composites
 
-AutoEmbeddingComposite
-----------------------
+The following composites are supported:
+
+*   :class:`.AutoEmbeddingComposite`
+*   :class:`.EmbeddingComposite`
+*   :class:`.FixedEmbeddingComposite`
+*   :class:`.LazyFixedEmbeddingComposite`
+*   :class:`.ParallelEmbeddingComposite`
+*   :class:`.VirtualGraphComposite`
 
 .. autoclass:: AutoEmbeddingComposite
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   AutoEmbeddingComposite.child
-   AutoEmbeddingComposite.parameters
-   AutoEmbeddingComposite.properties
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   AutoEmbeddingComposite.sample
-   AutoEmbeddingComposite.sample_ising
-   AutoEmbeddingComposite.sample_qubo
-
-
-EmbeddingComposite
-------------------
+    :show-inheritance:
+    :members:
+    :inherited-members:
 
 .. autoclass:: EmbeddingComposite
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   EmbeddingComposite.child
-   EmbeddingComposite.parameters
-   EmbeddingComposite.properties
-   EmbeddingComposite.return_embedding_default
-   EmbeddingComposite.warnings_default
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   EmbeddingComposite.sample
-   EmbeddingComposite.sample_ising
-   EmbeddingComposite.sample_qubo
-
-
-FixedEmbeddingComposite
------------------------
+    :show-inheritance:
+    :members:
+    :inherited-members:
 
 .. autoclass:: FixedEmbeddingComposite
-   :show-inheritance:
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   FixedEmbeddingComposite.adjacency
-   FixedEmbeddingComposite.child
-   FixedEmbeddingComposite.children
-   FixedEmbeddingComposite.edgelist
-   FixedEmbeddingComposite.nodelist
-   FixedEmbeddingComposite.parameters
-   FixedEmbeddingComposite.properties
-   FixedEmbeddingComposite.structure
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   FixedEmbeddingComposite.sample
-   FixedEmbeddingComposite.sample_ising
-   FixedEmbeddingComposite.sample_qubo
-
-
-LazyFixedEmbeddingComposite
----------------------------
+    :show-inheritance:
+    :members:
+    :inherited-members:
 
 .. autoclass:: LazyFixedEmbeddingComposite
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-
-   LazyFixedEmbeddingComposite.adjacency
-   LazyFixedEmbeddingComposite.edgelist
-   LazyFixedEmbeddingComposite.nodelist
-   LazyFixedEmbeddingComposite.parameters
-   LazyFixedEmbeddingComposite.properties
-   LazyFixedEmbeddingComposite.structure
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   LazyFixedEmbeddingComposite.sample
-   LazyFixedEmbeddingComposite.sample_ising
-   LazyFixedEmbeddingComposite.sample_qubo
-
-
-ParallelEmbeddingComposite
---------------------------
+    :show-inheritance:
+    :members:
+    :inherited-members:
 
 .. autoclass:: ParallelEmbeddingComposite
-
-
-TilingComposite
----------------
-
-.. autoclass:: TilingComposite
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   TilingComposite.adjacency
-   TilingComposite.child
-   TilingComposite.children
-   TilingComposite.edgelist
-   TilingComposite.embeddings
-   TilingComposite.nodelist
-   TilingComposite.num_tiles
-   TilingComposite.parameters
-   TilingComposite.properties
-   TilingComposite.structure
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   TilingComposite.sample
-   TilingComposite.sample_ising
-   TilingComposite.sample_qubo
-
-VirtualGraphComposite
----------------------
+    :show-inheritance:
+    :members:
+    :inherited-members:
 
 .. autoclass:: VirtualGraphComposite
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   VirtualGraphComposite.adjacency
-   VirtualGraphComposite.child
-   VirtualGraphComposite.children
-   VirtualGraphComposite.edgelist
-   VirtualGraphComposite.nodelist
-   VirtualGraphComposite.parameters
-   VirtualGraphComposite.properties
-   VirtualGraphComposite.structure
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   VirtualGraphComposite.sample
-   VirtualGraphComposite.sample_ising
-   VirtualGraphComposite.sample_qubo
-
-
+    :show-inheritance:
+    :members:
+    :inherited-members:
 
 Linear Bias
 ===========
 
 Composite for using auxiliary qubits to bias problem qubits.
 
+The following composites are supported:
 
-LinearAncillaComposite
------------------------
+*   :class:`.LinearAncillaComposite`
 
 .. autoclass:: LinearAncillaComposite
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   LinearAncillaComposite.child
-   LinearAncillaComposite.children
-   LinearAncillaComposite.parameters
-   LinearAncillaComposite.properties
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   LinearAncillaComposite.sample
-   LinearAncillaComposite.sample_ising
-   LinearAncillaComposite.sample_qubo
+    :show-inheritance:
+    :members:
+    :inherited-members:
 
 
 Reverse Anneal
@@ -312,56 +104,17 @@ Reverse Anneal
 Composites that do batch operations for reverse annealing based on sets of initial
 states or anneal schedules.
 
-ReverseBatchStatesComposite
----------------------------
+The following composites are supported:
+
+*   :class:`.ReverseBatchStatesComposite`
+*   :class:`.ReverseAdvanceComposite`
 
 .. autoclass:: ReverseBatchStatesComposite
-
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   ReverseBatchStatesComposite.child
-   ReverseBatchStatesComposite.children
-   ReverseBatchStatesComposite.parameters
-   ReverseBatchStatesComposite.properties
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   ReverseBatchStatesComposite.sample
-   ReverseBatchStatesComposite.sample_ising
-   ReverseBatchStatesComposite.sample_qubo
-
-ReverseAdvanceComposite
------------------------
+    :show-inheritance:
+    :members:
+    :inherited-members:
 
 .. autoclass:: ReverseAdvanceComposite
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   ReverseAdvanceComposite.child
-   ReverseAdvanceComposite.children
-   ReverseAdvanceComposite.parameters
-   ReverseAdvanceComposite.properties
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   ReverseAdvanceComposite.sample
-   ReverseAdvanceComposite.sample_ising
-   ReverseAdvanceComposite.sample_qubo
-
+    :show-inheritance:
+    :members:
+    :inherited-members:
