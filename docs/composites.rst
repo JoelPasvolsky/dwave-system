@@ -4,21 +4,24 @@
 Composites
 ==========
 
-:ref:`dimod composites <concept_samplers_composites>` that provide layers of pre- and
-post-processing (e.g., :term:`minor-embedding`) when using the D-Wave system:
+:ref:`dimod composites <concept_samplers_composites>` that provide layers of
+pre- and post-processing (e.g., :term:`minor-embedding`) when using D-Wave
+quantum computers.
 
 .. currentmodule:: dwave.system.composites
 
-Other Ocean packages provide additional composites; for example,
-:ref:`dimod <index_dimod>` provides composites that operate
-on the problem (e.g., scaling values), track inputs and outputs for debugging,
-and other useful functionality relevant to generic samplers.
+Other Ocean packages provide additional composites; for example:
+
+*   :ref:`dimod <index_dimod>` provides :ref:`composites <dimod_composites>`
+    that operate on the problem (e.g., scaling values), track inputs and outputs
+    for debugging, and other useful functionality relevant to generic samplers.
+*   :ref:`index_preprocessing` provides composites that clip, fix, and scale
+    variables and apply spin-reversal transforms.
 
 CutOffs
 =======
 
-Prunes the binary quadratic model (BQM) submitted to the child sampler by retaining
-only interactions with values commensurate with the sampler’s precision.
+.. automodule:: dwave.system.composites.cutoffcomposite
 
 CutOffComposite
 ---------------
@@ -50,9 +53,6 @@ Methods
 PolyCutOffComposite
 -------------------
 
-Prunes the polynomial submitted to the child sampler by retaining
-only interactions with values commensurate with the sampler’s precision.
-
 .. autoclass:: PolyCutOffComposite
 
 Properties
@@ -75,7 +75,6 @@ Methods
    PolyCutOffComposite.sample_poly
    PolyCutOffComposite.sample_hising
    PolyCutOffComposite.sample_hubo
-
 
 
 Embedding
