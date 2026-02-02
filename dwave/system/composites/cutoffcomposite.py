@@ -92,21 +92,20 @@ class CutOffComposite(dimod.ComposedSampler):
 
     @property
     def children(self):
-        """List of child samplers that that are used by this composite."""
+        """list: List of child samplers that that are used by this composite."""
         return self._children
 
     @property
     def parameters(self):
-        """dict: Parameters accepted by the sampler methods.
+        """dict: Supported parameters.
 
-        A dict where keys are the keyword parameters accepted by the sampler
-        methods and values are lists of the properties relevant to each
-        parameter."""
+        For an instantiated composed sampler, keys are the keyword parameters
+        accepted by the child sampler and parameters added by the composite."""
         return self.child.parameters.copy()
 
     @property
     def properties(self):
-        """dict: Additional information about the sampler."""
+        """dict: Properties of the child sampler."""
         return {'child_properties': self.child.properties.copy()}
 
     def sample(self, bqm, **parameters):
@@ -273,21 +272,20 @@ class PolyCutOffComposite(dimod.ComposedPolySampler):
 
     @property
     def children(self):
-        """List of child samplers that that are used by this composite."""
+        """list: List of child samplers that that are used by this composite."""
         return self._children
 
     @property
     def parameters(self):
-        """dict: Parameters accepted by the sampler methods.
+        """dict: Supported parameters.
 
-        A dict where keys are the keyword parameters accepted by the sampler
-        methods and values are lists of the properties relevant to each
-        parameter."""
+        For an instantiated composed sampler, keys are the keyword parameters
+        accepted by the child sampler and parameters added by the composite."""
         return self.child.parameters.copy()
 
     @property
     def properties(self):
-        """dict: Additional information about the sampler."""
+        """dict: Properties of the child sampler."""
         return {'child_properties': self.child.properties.copy()}
 
     def sample_poly(self, poly, **kwargs):

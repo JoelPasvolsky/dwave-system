@@ -13,15 +13,15 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-"""Embedding composites for various types of problems and application.
-For example:
+"""Composites for :term:`minor-embedding` a problem :term:`BQM` into a D-Wave
+quantum computer. For example:
 
-* :class:`.EmbeddingComposite` for a problem with arbitrary structure that likely
-  requires hueristic embedding.
-* :class:`.AutoEmbeddingComposite` can save unnecessary embedding for
-  problems that might have a structure similar to the child sampler.
-* :class:`.LazyFixedEmbeddingComposite` can benefit applications that
-  resubmit a BQM with changes in some values.
+*   :class:`.EmbeddingComposite` for a problem with arbitrary structure that
+    likely requires heuristic embedding.
+*   :class:`.AutoEmbeddingComposite` can save unnecessary embedding for
+    problems that might have a structure similar to the child sampler.
+*   :class:`.LazyFixedEmbeddingComposite` can benefit applications that
+    resubmit a BQM with changes in some values.
 """
 
 import itertools
@@ -47,39 +47,42 @@ __all__ = ('EmbeddingComposite',
 class EmbeddingComposite(dimod.ComposedSampler):
     """Maps problems to a structured sampler.
 
-    Automatically minor-embeds a problem into a structured sampler such as a
-    D-Wave quantum computer. A new minor-embedding is calculated each time one 
-    of its sampling methods is called.
+    Automatically :term:`minor embeds <minor embed>` a problem into a
+    :term:`structured sampler` such as a D-Wave quantum computer. A new
+    minor-embedding is calculated each time one of its sampling methods is
+    called.
 
-    In case a native embedding is found (one to one mapping between source and
+    If a native embedding is found (one to one mapping between source and
     target variables), embedding and unembedding steps are simplified as they
     are reduced to variable relabeling.
 
     Args:
         child_sampler (:class:`dimod.Sampler`):
-            A dimod sampler, such as a :obj:`DWaveSampler`, that accepts
-            only binary quadratic models of a particular structure.
+            A :ref:`index_dimod` sampler, such as a
+            :class:`~dwave.system.samplers.DWaveSampler`, that accepts only a
+            :term:`binary quadratic model` of a particular structure.
 
         find_embedding (function, optional):
-            A function `find_embedding(S, T, **kwargs)` where `S` and `T`
-            are edgelists. The function can accept additional keyword arguments.
+            A function ``find_embedding(S, T, **kwargs)`` where ``S`` and ``T``
+            are edge lists. The function can accept additional keyword arguments.
             Defaults to :func:`minorminer.find_embedding`.
 
         embedding_parameters (dict, optional):
             If provided, parameters are passed to the embedding method as
-            keyword arguments.
+            keyword arguments. Overridden by any parameters passed to the
+            sampling method.
 
         scale_aware (bool, optional, default=False):
-            Pass chain interactions to child samplers that accept an 
+            Pass chain interactions to child samplers that accept an
             ``ignored_interactions`` parameter.
 
         child_structure_search (function, optional):
-            A function that accepts a sampler and returns the 
+            A function that accepts a sampler and returns the
             :attr:`~dimod.Structured.structure` attribute.
-            Defaults to :func:`dimod.child_structure_dfs`.
+            Defaults to :func:`~dimod.utilities.child_structure_dfs`.
 
     .. versionadded:: 1.30.0
-        Support for context manager protocol with :meth:`dimod.Scoped`
+        Support for context manager protocol with :class:`dimod.Scoped`
         implemented.
 
     .. versionchanged:: 1.33.0
@@ -136,7 +139,7 @@ class EmbeddingComposite(dimod.ComposedSampler):
         self.scale_aware = bool(scale_aware)
 
     parameters = None  # overwritten by init
-    """dict[str, list]: Parameters in the form of a dict.
+    """dict[str, list]: Supported parameters.
 
     For an instantiated composed sampler, keys are the keyword parameters
     accepted by the child sampler and parameters added by the composite.
@@ -146,23 +149,21 @@ class EmbeddingComposite(dimod.ComposedSampler):
     """list [child_sampler]: List containing the structured sampler."""
 
     properties = None  # overwritten by init
-    """dict: Properties in the form of a dict.
-
-    Contains the properties of the child sampler.
+    """dict: Properties of the child sampler.
     """
 
     return_embedding_default = False
-    """Defines the default behavior for returning embeddings. 
-    
-    Sets the default for the :meth:`.sample` method's 
-    ``return_embedding`` optional parameter (``kwarg``).
+    """Defines the default behavior for returning embeddings.
+
+    Sets the default for the :meth:`.sample` method's ``return_embedding``
+    optional parameter (``kwarg``).
     """
 
     warnings_default = WarningAction.IGNORE
-    """Defines the default behavior for warnings. 
-    
-    Sets the default for the :meth:`.sample` method's 
-    ``warnings`` optional parameter (``kwarg``).
+    """Defines the default behavior for warnings.
+
+    Sets the default for the :meth:`.sample` method's ``warnings`` optional
+    parameter (``kwarg``).
     """
 
     def sample(self, bqm, chain_strength=None,
@@ -175,14 +176,14 @@ class EmbeddingComposite(dimod.ComposedSampler):
         """Sample from the provided binary quadratic model.
 
         Args:
-            bqm (:obj:`~dimod.BinaryQuadraticModel`):
-                Binary quadratic model to be sampled from.
+            bqm (:class:`~dimod.binary.BinaryQuadraticModel`):
+                :term:`Binary quadratic model` to be sampled from.
 
             chain_strength (float/mapping/callable, optional):
-                Sets the coupling strength between qubits representing variables 
-                that form a :term:`chain`. Mappings should specify the required 
-                chain strength for each variable. Callables should accept the BQM 
-                and embedding and return a float or mapping. By default, 
+                Sets the coupling strength between qubits representing variables
+                that form a :term:`chain`. Mappings should specify the required
+                chain strength for each variable. Callables should accept the
+                BQM and embedding and return a float or mapping. By default,
                 ``chain_strength`` is calculated with
                 :func:`~dwave.embedding.chain_strength.uniform_torque_compensation`.
 
@@ -195,7 +196,7 @@ class EmbeddingComposite(dimod.ComposedSampler):
                 :mod:`~dwave.embedding.chain_breaks`.
 
             chain_break_fraction (bool, optional, default=True):
-                Add a ``chain_break_fraction`` field to the unembedded response 
+                Adds a ``chain_break_fraction`` field to the unembedded response
                 with the fraction of chains broken before unembedding.
 
             embedding_parameters (dict, optional):
@@ -204,11 +205,12 @@ class EmbeddingComposite(dimod.ComposedSampler):
                 to the constructor.
 
             return_embedding (bool, optional):
-                If True, the embedding, chain strength, chain break method and
-                embedding parameters are added to the :attr:`~dimod.SampleSet.info`
-                field of the returned sample set. The default behavior is defined
-                by the :attr:`return_embedding_default` attribute, which by default 
-                is False.
+                If True, the embedding, chain strength, chain-break method, and
+                embedding parameters are added to the
+                :attr:`~dimod.SampleSet.info` field of the returned sample set.
+                The default behavior is defined by the
+                :attr:`return_embedding_default` attribute, which by default is
+                False.
 
             warnings (:class:`~dwave.system.warnings.WarningAction`, optional):
                 Defines what warning action to take, if any (see the
@@ -233,7 +235,7 @@ class EmbeddingComposite(dimod.ComposedSampler):
             :obj:`~dimod.SampleSet`
 
         Examples:
-            See the example in :class:`.EmbeddingComposite`.
+            See the example in the :class:`.EmbeddingComposite` class.
 
         """
         if return_embedding is None:
@@ -343,43 +345,44 @@ class EmbeddingComposite(dimod.ComposedSampler):
 
 
 class LazyFixedEmbeddingComposite(EmbeddingComposite, dimod.Structured):
-    """Maps problems to the structure of its first given problem.
+    r"""Maps problems to the structure of its first given problem.
 
-    This composite reuses the minor-embedding found for its first given problem
-    without recalculating a new minor-embedding for subsequent calls of its
-    sampling methods.
+    This composite reuses the :term:`minor-embedding` found for its first given
+    problem without recalculating a new minor-embedding for subsequent calls of
+    its sampling methods.
 
     Args:
         child_sampler (dimod.Sampler):
-            Structured dimod sampler.
+            A :ref:`index_dimod` :term:`structured sampler` such as a D-Wave
+            quantum computer.
 
-        find_embedding (function, default=:func:`minorminer.find_embedding`):
-            A function ``find_embedding(S, T, **kwargs)`` where ``S`` and ``T``
-            are edgelists. The function can accept additional keyword arguments.
-            The function is used to find the embedding for the first problem
-            solved.
+        find_embedding (function, default=\ :func:`minorminer.find_embedding`):
+            A function ``find_embedding(S, T, **kwargs)``, where ``S`` and ``T``
+            are edge lists, used to find the embedding for the first problem
+            solved. It can accept additional keyword arguments.
 
         embedding_parameters (dict, optional):
-            If provided, parameters are passed to the embedding method as keyword
-            arguments.
+            If provided, parameters are passed to the embedding method as
+            keyword arguments. Overridden by any parameters passed to the
+            sampling method.
 
     .. versionadded:: 1.30.0
-        Support for context manager protocol with :meth:`dimod.Scoped`
+        Support for context manager protocol with :class:`dimod.Scoped`
         implemented.
 
     Examples:
 
         >>> from dwave.system import LazyFixedEmbeddingComposite, DWaveSampler
         ...
-        >>> sampler = LazyFixedEmbeddingComposite(DWaveSampler())
-        >>> sampler.nodelist is None  # no structure prior to first sampling
+        >>> with LazyFixedEmbeddingComposite(DWaveSampler()) as sampler:
+        ...     print(sampler.nodelist is None) # no structure prior to first sampling
+        ...     __ = sampler.sample_ising({}, {('a', 'b'): -1})
+        ...     print(sampler.nodelist)         # has structure based on given problem
         True
-        >>> __ = sampler.sample_ising({}, {('a', 'b'): -1})
-        >>> sampler.nodelist  # has structure based on given problem
         ['a', 'b']
 
     """
-        
+
     @property
     def nodelist(self):
         """list: Nodes available to the composed sampler."""
@@ -478,18 +481,18 @@ class LazyFixedEmbeddingComposite(EmbeddingComposite, dimod.Structured):
         """Sample the binary quadratic model.
 
         On the first call of a sampling method, finds a :term:`minor-embedding`
-        for the given binary quadratic model (BQM). All subsequent calls to its
-        sampling methods reuse this embedding.
+        for the given binary quadratic model (:term:`BQM`). All subsequent calls
+        to its sampling methods reuse this embedding.
 
         Args:
-            bqm (:obj:`~dimod.BinaryQuadraticModel`):
+            bqm (:class:`~dimod.binary.BinaryQuadraticModel`):
                 Binary quadratic model to be sampled from.
 
             chain_strength (float/mapping/callable, optional):
-                Sets the coupling strength between qubits representing variables 
-                that form a :term:`chain`. Mappings should specify the required 
-                chain strength for each variable. Callables should accept the BQM 
-                and embedding and return a float or mapping. By default, 
+                Sets the coupling strength between qubits representing variables
+                that form a :term:`chain`. Mappings should specify the required
+                chain strength for each variable. Callables should accept the
+                BQM and embedding and return a float or mapping. By default,
                 ``chain_strength`` is calculated with
                 :func:`~dwave.embedding.chain_strength.uniform_torque_compensation`.
 
@@ -498,8 +501,8 @@ class LazyFixedEmbeddingComposite(EmbeddingComposite, dimod.Structured):
                 See :func:`~dwave.embedding.unembed_sampleset`.
 
             chain_break_fraction (bool, optional, default=True):
-                Add a ``chain_break_fraction`` field to the unembedded response with
-                the fraction of chains broken before unembedding.
+                Adds a ``chain_break_fraction`` field to the unembedded response
+                with the fraction of chains broken before unembedding.
 
             embedding_parameters (dict, optional):
                 If provided, parameters are passed to the embedding method as
@@ -540,11 +543,13 @@ class LazyFixedEmbeddingComposite(EmbeddingComposite, dimod.Structured):
 
 
 class FixedEmbeddingComposite(LazyFixedEmbeddingComposite):
-    """Maps problems to a structured sampler with the specified minor-embedding.
+    """Maps problems to a structured sampler with the specified
+    :term:`minor-embedding`.
 
     Args:
         child_sampler (dimod.Sampler):
-            Structured dimod sampler such as a D-Wave quantum computer.
+            A :ref:`index_dimod` :term:`structured sampler` such as a D-Wave
+            quantum computer.
 
         embedding (dict[hashable, iterable], optional):
             Mapping from a source graph to the specified sampler's graph (the
@@ -560,13 +565,13 @@ class FixedEmbeddingComposite(LazyFixedEmbeddingComposite):
             keyword arguments are ignored.
 
     .. versionadded:: 1.30.0
-        Support for context manager protocol with :meth:`dimod.Scoped`
+        Support for context manager protocol with :class:`dimod.Scoped`
         implemented.
 
     Examples:
         To embed a triangular problem (a problem with a three-node complete graph,
-        or clique) in the Chimera topology, you need to :term:`chain` two
-        qubits. This example maps triangular problems to a composed sampler
+        or clique) in the :term:`Chimera` topology, you need to :term:`chain`
+        two qubits. This example maps triangular problems to a composed sampler
         (based on the unstructured :class:`~dimod.reference.samplers.ExactSolver`)
         with a Chimera unit-cell structure.
 
@@ -578,8 +583,8 @@ class FixedEmbeddingComposite(LazyFixedEmbeddingComposite):
         >>> embedding = {'a': [0, 4], 'b': [1], 'c': [5]}
         >>> structured_sampler = dimod.StructureComposite(dimod.ExactSolver(),
         ...                                               c1.nodes, c1.edges)
-        >>> sampler = FixedEmbeddingComposite(structured_sampler, embedding)
-        >>> sampler.edgelist
+        >>> with FixedEmbeddingComposite(structured_sampler, embedding) as sampler:
+        ...     print(sampler.edgelist)
         [('a', 'b'), ('a', 'c'), ('b', 'c')]
     """
     def __init__(self, child_sampler, embedding=None, source_adjacency=None,
@@ -623,13 +628,13 @@ class AutoEmbeddingComposite(EmbeddingComposite):
 
     This composite first tries to submit the binary quadratic model directly
     to the child sampler and only embeds if a
-    :exc:`~dimod.exceptions.BinaryQuadraticModelStructureError` exception is 
+    :exc:`~dimod.exceptions.BinaryQuadraticModelStructureError` exception is
     raised.
 
     Args:
         child_sampler (:class:`dimod.Sampler`):
-            Structured dimod sampler, such as a
-            :obj:`~dwave.system.samplers.DWaveSampler()`.
+            A :ref:`index_dimod` :term:`structured sampler`, such as a
+            :class:`~dwave.system.samplers.DWaveSampler()`.
 
         find_embedding (function, optional):
             A function ``find_embedding(S, T, **kwargs)`` where ``S`` and ``T``

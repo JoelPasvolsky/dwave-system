@@ -124,6 +124,7 @@ Properties
    :toctree: generated/
 
    EmbeddingComposite.child
+   EmbeddingComposite.children
    EmbeddingComposite.parameters
    EmbeddingComposite.properties
    EmbeddingComposite.return_embedding_default
