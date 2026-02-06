@@ -270,8 +270,9 @@ Methods
 Reverse Anneal
 ==============
 
-Composites that do batch operations for reverse annealing based on sets of initial
-states or anneal schedules.
+.. automodule:: dwave.system.composites.reversecomposite
+
+.. currentmodule:: dwave.system.composites
 
 ReverseBatchStatesComposite
 ---------------------------
