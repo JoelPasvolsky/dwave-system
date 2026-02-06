@@ -12,7 +12,12 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-"""Composite to implement linear coefficients with ancilla qubits biased with flux-bias offsets.
+"""Composite for implementing linear coefficients with auxiliary qubits biased
+with :term:`flux-bias offsets <flux bias>`.
+
+Using flux-bias offsets to implement linear biases might be used, for example,
+in the :ref:`fast-anneal protocol <qpu_annealprotocol_fast>`, as described in
+the :ref:`qpu_config_emulate_with_fbo` section.
 """
 
 import numbers
@@ -30,19 +35,21 @@ __all__ = ["LinearAncillaComposite"]
 
 
 class LinearAncillaComposite(dimod.ComposedSampler, dimod.Structured):
-    """Implements linear biases as ancilla qubits polarized with strong flux biases.
+    """Implements linear biases as ancilla qubits polarized with strong flux
+    biases.
 
-    Linear bias :math:`h_i` of qubit :math:`i` is implemented through a coupling 
-    :math:`J_{ij}` between the qubit and a neighboring qubit :math:`j` that has a 
-    large flux-bias offset.
+    Linear bias :math:`h_i` of qubit :math:`i` is implemented through a coupling
+    :math:`J_{ij}` between the qubit and a neighboring qubit :math:`j` that has
+    a large flux-bias offset.
 
     Args:
         child_sampler (:class:`dimod.Sampler`):
-            A dimod sampler, such as a :class:`~dwave.system.samplers.DWaveSampler()`,
-            that has flux bias controls.
+            A dimod sampler, such as a
+            :class:`~dwave.system.samplers.DWaveSampler()`, that has flux-bias
+            controls.
 
     .. versionadded:: 1.30.0
-        Support for context manager protocol with :meth:`dimod.Scoped`
+        Support for context manager protocol with :class:`dimod.Scoped`
         implemented.
 
     Examples:
@@ -102,7 +109,8 @@ class LinearAncillaComposite(dimod.ComposedSampler, dimod.Structured):
         """Sample from the provided binary quadratic model.
 
         .. note::
-            This composite does not support the :ref:`parameter_qpu_auto_scale` parameter; use the
+            This composite does not support the :ref:`parameter_qpu_auto_scale`
+            parameter; use the
             :class:`~dwave.preprocessing.composites.ScaleComposite` for scaling.
 
         Args:
@@ -110,13 +118,14 @@ class LinearAncillaComposite(dimod.ComposedSampler, dimod.Structured):
                 Binary quadratic model to be sampled from.
 
             h_tolerance (:class:`numbers.Number`):
-                Magnitude of the linear bias to be set directly on problem qubits; above this the bias
-                is emulated by the flux-bias offset to an ancilla qubit. Assumed to be positive. 
-                Defaults to zero.
+                Magnitude of the linear bias to be set directly on problem
+                qubits; above this the bias is emulated by the flux-bias offset
+                to an ancilla qubit. Assumed to be positive. Defaults to zero.
 
             default_flux_bias_range (:class:`tuple`):
-                Flux-bias range, as a two-tuple, supported by the QPU. The values must be large enough to
-                ensure qubits remain polarized throughout the annealing process.
+                Flux-bias range, as a two-tuple, supported by the QPU. The
+                values must be large enough to ensure qubits remain polarized
+                throughout the annealing process.
 
             **parameters:
                 Parameters for the sampling method, specified by the child

@@ -20,9 +20,6 @@ The :class:`.ParallelEmbeddingComposite` class takes a problem and
 parallelizes across disjoint embeddings on a target graph.
 This allows multiple independent sampling processes to be conducted in
 parallel.
-
-See the :ref:`index_concepts` section
-for explanations of technical terms in descriptions of Ocean tools.
 """
 
 from typing import Optional
@@ -39,131 +36,140 @@ __all__ = ["ParallelEmbeddingComposite"]
 
 
 class ParallelEmbeddingComposite(dimod.Composite, dimod.Structured, dimod.Sampler):
-    """Composite to parallelize sampling of a small problem on a structured sampler
+    """Parallelizes sampling of a small problem on a structured sampler.
 
-    Enables parallel sampling on a (target) sampler by use of multiple disjoint
-    embeddings. If a list of embeddings is not provided, the function
-    :func:`~minorminer.utils.parallel_embeddings.find_multiple_embeddings` is called
-    by default to attempt a maximum number of embeddings. If the target and source
-    graph match processor architecture on a Chimera, Pegasus or Zephyr then
-    tiling of a known embedding in a regular pattern may be a useful embedding
-    strategy and find_sublattice_embeddings can be considered.
-    See :mod:`~minorminer.utils.parallel_embeddings` documentation for customizable options
-    including specification of the time_out and maximum number of embeddings.
-    See ``tests/test_parallel_embeddings.py`` for use cases beyond the examples
-    provided.
+    Enables parallel sampling on a (target) sampler, such as a quantum computer,
+    by use of multiple disjoint embeddings.
 
-    Embeddings, particularly for large subgraphs of large target graphs
-    can be difficult to obtain. Relying on the defaults of this routine may result
-    in slow embedding, see :mod:`~minorminer.util.parallel_embeddings` for methods. Note
-    that parallelization of job submissions can mitigate for network latency,
-    programming time and readout time in the case of QPU samplers, subject to
-    additional complexity in the embedding process.
+    If you do not provide a list of embeddings, the function
+    :func:`~minorminer.utils.parallel_embeddings.find_multiple_embeddings`,
+    called by default, attempts a maximum number of embeddings. If the target
+    and source graphs match :term:`QPU` architecture (e.g., :term:`Zephyr`
+    :term:`topology`), the tiling of a known embedding in a regular pattern,
+    such as implemented by the
+    :func:`~minorminer.utils.parallel_embeddings.find_sublattice_embeddings`,
+    may be a useful embedding strategy. For example, if an embedding can be
+    found for a :term:`Chimera` tile, you can try an embedding of multiple
+    displacements on a target QPU graph ("tiling"), and if all nodes on the
+    Chimera tile are used, and the target graph is defect free, this achieves
+    optimal parallelization. See the examples below and :ref:`index_minorminer`
+    for information and example use cases.
+
+    Embeddings, particularly for large subgraphs of large target graphs, can be
+    difficult to find; the defaults of this composite may be slow. However, for
+    QPU samplers, parallelization of job submissions may compensate for
+    programming and readout times and network latency.
 
     Args:
-       child_sampler (:class:`~dimod.Sampler`): dimod sampler such as a
-           :class:`~dwave.system.samplers.DWaveSampler`.
+       child_sampler (:class:`~dimod.Sampler`): dimod :term:`structured sampler`
+            such as a :class:`~dwave.system.samplers.DWaveSampler`.
 
        embeddings (list, optional): A list of embeddings. Each embedding is
-           assumed to be a dictionary with source-graph nodes as keys and iterables
-           on target-graph nodes to as values. The embeddings can include keys not
-           required by the source graph. Note that one_to_iterable is ignored
-           (assumed True).
+           assumed to be a dictionary with source-graph nodes as keys and
+           iterables of target-graph nodes as values. The embeddings can include
+           keys not required by the source graph. Note that ``one_to_iterable``
+           is ignored (assumed True).
 
-       source (nx.Graph, optional): A source graph must be provided if embeddings
-           are not specified. The source graph nodes should be supported by
-           every embedding.
+       source (:class:`NetworkX Graph <networkx:networkx.Graph>`, optional): A
+            source graph must be provided if ``embeddings`` is not specified.
+            This source graph's nodes should be supported by every embedding.
 
-       embedder (Callable, optional): A function that returns
-           embeddings when it is not provided. The first two arguments are
-           assumed to be the source and target graph.
+       embedder (Callable, optional): A function that returns embeddings when
+            not provided. Its first two arguments are assumed to be the source
+            and target graphs.
 
-       embedder_kwargs (dict, optional): keyword arguments for the
-           embedder function. The default is an empty dictionary.
+       embedder_kwargs (dict, optional): keyword arguments for the ``embedder``
+            function. The default is an empty dictionary.
 
-       one_to_iterable (bool, default=False): This parameter should be fixed to
-           match the value type returned by embedder. If False the
-           values in every dictionary are target nodes (defining a subgraph
-           embedding), these are transformed to tuples for compatibility with embed_bqm
-           and unembed_sampleset. If True, the values are iterables over target
-           nodes and no transformation is required.
+       one_to_iterable (bool, default=False): Defines the value type returned by
+            the ``embedder`` function:
 
-       child_structure_search (function, optional):
-           A function that accepts a sampler and returns the
-           :attr:`~dimod.Structured.structure` attribute.
-           Defaults to :func:`dimod.child_structure_dfs`.
+            *   False: The values in every dictionary are target nodes (defining
+                a subgraph embedding). The composite transforms these to tuples
+                for compatibility with the :func:`~dwave.embedding.embed_bqm`
+                and :func:`~dwave.embedding.unembed_sampleset` functions.
+            *   True: The values are iterables over target nodes and no
+                transformation is required.
+
+       child_structure_search (function, optional): A function that accepts a
+            sampler and returns the :attr:`~dimod.Structured.structure`
+            attribute. Defaults to the
+            :func:`~dimod.utilities.child_structure_dfs` function.
 
     Raises:
-        ValueError: If the `child_sampler` is not structured, and the structure
-           cannot be inferred from `child_structure_search`.
-           If neither embeddings, nor a source graph, are provided.
-           If the embeddings provided are an empty list, or no embeddings are found.
-           If embeddings and source graph nodes are inconsistent.
-           If embeddings and target graph nodes are inconsistent.
+        ValueError: for any of the following conditions: ``child_sampler`` is
+            not structured, and the structure cannot be inferred from
+            ``child_structure_search``; neither ``embeddings`` nor ``source``
+            are provided; ``embeddings`` provided is an empty list, or no
+            embeddings are found; ``embeddings`` and ``source`` nodes are
+            inconsistent; ``embeddings`` and target graph nodes are
+            inconsistent.
 
     Examples:
 
-        This example submits a simple Ising problem of just two variables on a
-        D-Wave system. We use the default subgraph embedder finding a maximum
-        number of embeddings. Note that searching for O(1000) of embeddings takes
-        several seconds.
+        This example submits a simple :term:`Ising` problem of just two
+        variables to a quantum computer. The default subgraph embedder, the
+        :func:`~minorminer.utils.parallel_embeddings.find_multiple_embeddings`
+        function, is used to find a maximum number of embeddings. Note that
+        searching for O(1000) of embeddings takes several seconds.
 
         >>> from dwave.system import DWaveSampler
         >>> from dwave.system import ParallelEmbeddingComposite
         >>> from networkx import from_edgelist
-        >>> embedder_kwargs = {'max_num_emb': None}  # Without this, only 1 embedding will be sought
+        ...
+        >>> embedder_kwargs = {'max_num_emb': None}  # Without this, only 1 embedding is sought
         >>> source = from_edgelist([('a', 'b')])
-        >>> qpu = DWaveSampler()
-        >>> sampler = ParallelEmbeddingComposite(qpu, source=source, embedder_kwargs=embedder_kwargs)
-        >>> sampleset = sampler.sample_ising({},{('a', 'b'): 1}, num_reads=1)
+        >>> with DWaveSampler() as qpu:
+        ...     sampler = ParallelEmbeddingComposite(qpu, source=source, embedder_kwargs=embedder_kwargs)
+        ...     sampleset = sampler.sample_ising({},{('a', 'b'): 1}, num_reads=1)
         >>> len(sampleset) > 1  # Equal to the number of parallel embeddings
         True
 
-        If an embedding can be found for a Chimera tile, we can try many
-        dispacements on a target QPU graph (tiling). If all variables on the Chimera tile
-        are used, and the target graph is defect free, this allows an optimal
-        parallelization. Note that find_sublattice_embeddings should only be preferred
-        to the default find_multiple_embeddings where the source and target graph have a
-        special lattice relationship. Finding a large set of disjoint chimera cells within
-        a typical processor graph can take several seconds.
-        See tests/ for other examples.
+        Where source and target graphs have a special QPU lattice relationship
+        it's possible to find an optimal parallelization through displacement.
+        Note that finding a large set of disjoint chimera cells within a typical
+        QPU graph can take several seconds.
 
         >>> from dwave.system import DWaveSampler
         >>> from dwave.system import ParallelEmbeddingComposite
         >>> from dwave_networkx import chimera_graph
         >>> from minorminer.utils.parallel_embeddings import find_sublattice_embeddings
+        ...
         >>> source = tile = chimera_graph(1, 1, 4)  # A 1:1 mapping assumed
-        >>> qpu = DWaveSampler()
-        >>> embedder = find_sublattice_embeddings
-        >>> embedder_kwargs = {'max_num_emb': None, 'tile': tile}
-        >>> sampler = ParallelEmbeddingComposite(qpu, source=source, embedder=embedder, embedder_kwargs=embedder_kwargs)
         >>> J = {e: -1 for e in tile.edges}  # A ferromagnet on the Chimera tile.
-        >>> sampleset = sampler.sample_ising({}, J, num_reads=1)
+        >>> with DWaveSampler() as qpu:
+        ...     embedder = find_sublattice_embeddings
+        ...     embedder_kwargs = {'max_num_emb': None, 'tile': tile}
+        ...     sampler = ParallelEmbeddingComposite(
+        ...         qpu,
+        ...         source=source,
+        ...         embedder=embedder,
+        ...         embedder_kwargs=embedder_kwargs)
+        ...     sampleset = sampler.sample_ising({}, J, num_reads=1)
         >>> len(sampleset) > 1  # Equal to the number of parallel embeddings
         True
 
-        Consider use of :func:`~dwave_networkx.drawing.draw_parallel_embeddings` for visualization of the
-        embeddings found (``embeddings=sampler.embeddings`` over ``target=qpu.to_networkx_graph()``).
+    See also:
 
-    See the :ref:`index_concepts` section
-    for explanations of technical terms in descriptions of Ocean tools.
+        The :func:`~dwave_networkx.drawing.draw_parallel_embeddings` function to
+        visualize found embeddings.
 
     """
 
     nodelist = None
-    """list: List of active qubits for the structured solver."""
+    """list: Nodes of the structured sampler available to the composed sampler."""
 
     edgelist = None
-    """list: List of active couplers for the structured solver."""
+    """list: Edges of the structured sampler available to the composed sampler."""
 
     parameters = None
-    """dict[str, list]: Parameters in the form of a dict."""
+    """dict[str, list]: Supported parameters."""
 
     properties = None
-    """dict: Properties in the form of a dict."""
+    """dict: Supported properties."""
 
     children = None
-    """list: The single wrapped structured sampler."""
+    """list [child_sampler]: List containing the structured sampler"""
 
     embeddings = []
     """list: Embeddings into each available tile on the structured solver."""
@@ -271,28 +277,36 @@ class ParallelEmbeddingComposite(dimod.Composite, dimod.Structured, dimod.Sample
         chain_strength: Optional[float] = None,
         **kwargs,
     ) -> dimod.SampleSet:
-        """Sample from the specified binary quadratic model. Samplesets are
-        concatenated together in the the same order as the embeddings class variable,
-        the info field is returned from the child sampler unmodified.
+        """Sample from the specified binary quadratic model.
 
-        If the bqm or chain_strength varies by solver, or if a list of samplests
-        is desired as the output, use :code:`sample_multiple`.
+        Sample sets are concatenated in the the same order as the ``embeddings``
+        parameter used to instantiate the :class:`.ParallelEmbeddingComposite`
+        class.
 
         Args:
             bqm:
-                Binary quadratic model to be sampled from.
+                Binary quadratic model (:term:`BQM`) to be sampled from.
 
             chain_strength:
-                The chain strength parameter of the bqm.
+                The :term:`chain strength` parameter of the BQM.
 
             **kwargs:
-                Optional keyword arguments for the sampling method, specified per solver.
+                Optional keyword arguments for the sampling method, specified
+                per embedding.
 
         Returns:
-            :class:`~dimod.SampleSet`
+            :class:`~dimod.SampleSet`.
+
+            The ``info`` field is returned from the child sampler unmodified.
 
         Examples:
-            See class examples.
+            See examples in the :class:`.ParallelEmbeddingComposite` class.
+
+        See also:
+            If the ``bqm`` or ``chain_strength`` parameter varies by embedding,
+            or if you want a list of sample sets as the output, use the
+            :meth:`.sample_multiple` method.
+
         """
         chain_strengths = [chain_strength] * self.num_embeddings
         bqms = [bqm] * self.num_embeddings
@@ -318,35 +332,38 @@ class ParallelEmbeddingComposite(dimod.Composite, dimod.Structured, dimod.Sample
     ) -> tuple[list[dimod.SampleSet], dict]:
         """Sample from the specified binary quadratic models.
 
-        Samplesets are returned for every embedding, the binary quadratic model
-        solved on each embedding needn't be identical. Keyword arguments are passed
-        unmodified to the child sampler, with the exception of
-        `initial_states` (one state per embedding) which is composed to a
-        single `initial_state` parameter for the child sampler analogous to
-        the bqm composition.
+        Samplesets are returned for each binary quadratic model (:term:`BQM`) in
+        the ``bqms`` list, which is submitted to the child solver with the
+        corresponding item in the :term:`chain strength` and
+        :ref:`initial state <parameter_qpu_initial_state>` lists, specified here
+        by the ``chain_strengths`` and ``initial_states`` parameters, as well as
+        the corresponding item in the :term:`minor embedding` list of the
+        ``embeddings`` parameter used to instantiate the
+        :class:`.ParallelEmbeddingComposite` class. These four lists should be
+        ordered appropriately.
 
         Args:
             bqms:
-                Binary quadratic models to be sampled from. A list that
-                should be ordered to match ``self.embeddings``.
+                Binary quadratic models to be sampled from.
 
             chain_strengths:
-                The chain strength parameters for each bqm. A list that
-                should be ordered to match ``self.embeddings``.
+                Chain strength per BQM.
 
             initial_states:
-                initial state for each bqm. A list that should be ordered
-                to match ``self.embeddings``.
+                Initial state per BQM.
 
             **kwargs:
-                Optional keyword arguments for the sampling method, specified per solver.
+                Optional keyword arguments for the sampling method.
 
         Returns:
-            A typle consisting of:
-            1. A list of :class:`~dimod.SampleSet`, one per embedding
-            2. The info field returned by the child sampler
+            Tuple: A list of :class:`~dimod.SampleSet`, one per embedding, and
+            the ``info`` field returned by the child sampler.
+
         Examples:
-            See class examples.
+            See examples in the :class:`.ParallelEmbeddingComposite` class.
+
+        See also:
+            The :meth:`.sample_multiple` method.
         """
 
         # apply the embeddings to the given problem to tile it across the child sampler
@@ -386,5 +403,5 @@ class ParallelEmbeddingComposite(dimod.Composite, dimod.Structured, dimod.Sample
 
     @property
     def num_embeddings(self):
-        """Number of embedding available for replicating the problem."""
+        """Number of embeddings available for replicating the problem."""
         return len(self.embeddings)

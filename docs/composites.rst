@@ -208,6 +208,29 @@ ParallelEmbeddingComposite
 
 .. autoclass:: ParallelEmbeddingComposite
 
+Properties
+~~~~~~~~~~
+
+.. autosummary::
+   :toctree: generated/
+
+
+   ParallelEmbeddingComposite.children
+   ParallelEmbeddingComposite.edgelist
+   ParallelEmbeddingComposite.embeddings
+   ParallelEmbeddingComposite.nodelist
+   ParallelEmbeddingComposite.num_embeddings
+   ParallelEmbeddingComposite.parameters
+   ParallelEmbeddingComposite.properties
+
+Methods
+~~~~~~~
+
+.. autosummary::
+   :toctree: generated/
+
+   ParallelEmbeddingComposite.sample
+   ParallelEmbeddingComposite.sample_multiple
 
 TilingComposite
 ---------------
@@ -272,12 +295,12 @@ Methods
    VirtualGraphComposite.sample_qubo
 
 
-
 Linear Bias
 ===========
 
-Composite for using auxiliary qubits to bias problem qubits.
+.. automodule:: dwave.system.composites.linear_ancilla
 
+.. currentmodule:: dwave.system.composites
 
 LinearAncillaComposite
 -----------------------
