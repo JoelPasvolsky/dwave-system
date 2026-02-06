@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    The ``LeapHybridNLSampler`` class was made an alias for the
+    ``StrideHybridSolver`` class.

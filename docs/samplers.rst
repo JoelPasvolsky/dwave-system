@@ -21,14 +21,19 @@ Other Ocean packages provide additional samplers; for example,
 :ref:`dimod <index_dimod>` provides samplers for testing
 your code.
 
-DWaveSampler
+QPU Samplers
 ============
+
+Samplers for using the quantum processing unit (:term:`QPU`) directly.
+
+DWaveSampler
+------------
 
 .. autoclass:: DWaveSampler
     :show-inheritance:
 
 Properties
-----------
+~~~~~~~~~~
 
 For parameters and properties of D-Wave systems, see the
 :ref:`qpu_index_solver_properties` and :ref:`qpu_solver_parameters` sections.
@@ -45,7 +50,7 @@ For parameters and properties of D-Wave systems, see the
     ~DWaveSampler.warnings_default
 
 Methods
--------
+~~~~~~~
 
 .. autosummary::
     :toctree: generated/
@@ -62,12 +67,12 @@ Methods
 
 
 DWaveCliqueSampler
-==================
+------------------
 
 .. autoclass:: DWaveCliqueSampler
 
 Properties
-----------
+~~~~~~~~~~
 
 .. autosummary::
     :toctree: generated/
@@ -80,7 +85,7 @@ Properties
     ~DWaveCliqueSampler.target_graph
 
 Methods
--------
+~~~~~~~
 
 .. autosummary::
     :toctree: generated/
@@ -95,13 +100,56 @@ Methods
     ~DWaveCliqueSampler.trigger_failover
 
 
+Stride Hybrid Solver
+====================
+
+The Leap service's quantum-classical nonlinear :term:`hybrid` solver for
+optimizing business problems.
+
+StrideHybridSolver
+------------------
+
+.. autoclass:: StrideHybridSolver
+
+Properties
+~~~~~~~~~~
+
+.. autosummary::
+    :toctree: generated/
+
+    ~StrideHybridSolver.default_solver
+    ~StrideHybridSolver.parameters
+    ~StrideHybridSolver.properties
+
+Methods
+~~~~~~~
+
+.. autosummary::
+    :toctree: generated/
+
+    ~StrideHybridSolver.close
+    ~StrideHybridSolver.estimated_min_time_limit
+    ~StrideHybridSolver.sample
+
+LeapHybridNLSampler
+-------------------
+
+.. autoclass:: LeapHybridNLSampler
+
+
+Other Hybrid Solvers
+====================
+
+Additional :term:`hybrid` solvers in the Leap service.
+
+
 LeapHybridSampler
-=================
+-----------------
 
 .. autoclass:: LeapHybridSampler
 
 Properties
-----------
+~~~~~~~~~~
 
 .. autosummary::
     :toctree: generated/
@@ -111,7 +159,7 @@ Properties
     ~LeapHybridSampler.properties
 
 Methods
--------
+~~~~~~~
 
 .. autosummary::
     :toctree: generated/
@@ -125,12 +173,12 @@ Methods
 
 
 LeapHybridCQMSampler
-====================
+--------------------
 
 .. autoclass:: LeapHybridCQMSampler
 
 Properties
-----------
+~~~~~~~~~~
 
 .. autosummary::
     :toctree: generated/
@@ -140,7 +188,7 @@ Properties
     ~LeapHybridCQMSampler.parameters
 
 Methods
--------
+~~~~~~~
 
 .. autosummary::
     :toctree: generated/
@@ -149,40 +197,13 @@ Methods
     ~LeapHybridCQMSampler.min_time_limit
     ~LeapHybridCQMSampler.sample_cqm
 
-
-LeapHybridNLSampler
-====================
-
-.. autoclass:: LeapHybridNLSampler
-
-Properties
-----------
-
-.. autosummary::
-    :toctree: generated/
-
-    ~LeapHybridNLSampler.default_solver
-    ~LeapHybridNLSampler.parameters
-    ~LeapHybridNLSampler.properties
-
-Methods
--------
-
-.. autosummary::
-    :toctree: generated/
-
-    ~LeapHybridNLSampler.close
-    ~LeapHybridNLSampler.estimated_min_time_limit
-    ~LeapHybridNLSampler.sample
-
-
 LeapHybridDQMSampler
-====================
+--------------------
 
 .. autoclass:: LeapHybridDQMSampler
 
 Properties
-----------
+~~~~~~~~~~
 
 .. autosummary::
     :toctree: generated/
@@ -192,7 +213,7 @@ Properties
     ~LeapHybridDQMSampler.properties
 
 Methods
--------
+~~~~~~~
 
 .. autosummary::
     :toctree: generated/

@@ -37,6 +37,7 @@ __all__ = ['LeapHybridSampler',
            'LeapHybridDQMSampler',
            'LeapHybridCQMSampler',
            'LeapHybridNLSampler',
+           'StrideHybridSolver'
            ]
 
 
@@ -820,12 +821,13 @@ class LeapHybridCQMSampler(_ScopedSamplerMixin):
             )
 
 
-class LeapHybridNLSampler(_ScopedSamplerMixin):
-    r"""Submits nonlinear models to a hybrid solver in the Leap service.
+class StrideHybridSolver(_ScopedSamplerMixin):
+    r"""Submits nonlinear models to the Stride™ hybrid solver in the Leap service.
 
     The :term:`Leap` service's quantum-classical :term:`hybrid`
-    :term:`nonlinear model` solvers are intended to solve arbitrary application
-    problems formulated as :ref:`nonlinear models <concept_models_nonlinear>`.
+    :term:`nonlinear model` solver, also known as the Stride hybrid solver, is
+    intended to solve arbitrary application problems formulated as
+    :ref:`nonlinear models <concept_models_nonlinear>`.
 
     You can configure your :term:`solver` selection as described in the
     :ref:`cloud_configuration` section.\ [#]_
@@ -841,9 +843,9 @@ class LeapHybridNLSampler(_ScopedSamplerMixin):
         problem.
 
         >>> from dwave.optimization.generators import flow_shop_scheduling
-        >>> from dwave.system import LeapHybridNLSampler
+        >>> from dwave.system import StrideHybridSolver
         ...
-        >>> with LeapHybridNLSampler() as sampler:      # doctest: +SKIP
+        >>> with StrideHybridSolver() as sampler:      # doctest: +SKIP
         ...     processing_times = [[10, 5, 7], [20, 10, 15]]
         ...     model = flow_shop_scheduling(processing_times=processing_times)
         ...     results = sampler.sample(model, label="Small FSS problem")
@@ -865,6 +867,10 @@ class LeapHybridNLSampler(_ScopedSamplerMixin):
         is available as :attr:`.default_solver` property. Explicitly specifying
         a solver in a configuration file, an environment variable, or keyword
         arguments overrides this specification.
+
+    .. versionadded:: 1.35.0
+        The :class:`.LeapHybridNLSampler` class was made an alias for the
+        :class:`.StrideHybridSolver` class.
 
     """
 
@@ -914,7 +920,7 @@ class LeapHybridNLSampler(_ScopedSamplerMixin):
 
     @classproperty
     def default_solver(cls) -> Dict[str, str]:
-        """Features used to select the latest accessible hybrid nonlinear-model solver."""
+        """Features used to select the latest accessible Stride hybrid solver."""
         return dict(supported_problem_types__contains='nl',
                     order_by='-properties.version')
 
@@ -938,7 +944,7 @@ class LeapHybridNLSampler(_ScopedSamplerMixin):
 
         Keys of the returned dict are keyword parameters accepted by a SAPI
         query and values are lists of properties in
-        :attr:`~dwave.system.samplers.LeapHybridNLSampler.properties` for each
+        :attr:`~dwave.system.samplers.StrideHybridSolver.properties` for each
         key.
 
         :ref:`Solver parameters <opt_solver_nl_properties>` are dependent on
@@ -971,14 +977,14 @@ class LeapHybridNLSampler(_ScopedSamplerMixin):
                 Maximum runtime, in seconds, the solver should work on the
                 problem. Should be at least the estimated minimum required for
                 the problem, which is calculated and set by default.
-                :meth:`~dwave.system.samplers.LeapHybridNLSampler.estimated_min_time_limit`
+                :meth:`~dwave.system.samplers.StrideHybridSolver.estimated_min_time_limit`
                 estimates the minimum time for your problem.  For ``time_limit``
                 values shorter than the estimated minimum, runtime (and charge
                 time) is not guaranteed to be shorter than the estimated time.
 
             **kwargs:
                 Optional keyword arguments for the solver, specified in
-                :attr:`~dwave.system.samplers.LeapHybridNLSampler.parameters`.
+                :attr:`~dwave.system.samplers.StrideHybridSolver.parameters`.
 
         Returns:
             :class:`~concurrent.futures.Future` [SampleResult]:
@@ -1028,7 +1034,7 @@ class LeapHybridNLSampler(_ScopedSamplerMixin):
                 # note: no point using stacklevel, as this is a different thread
                 warnings.warn(msg, category=UserWarning)
 
-            return LeapHybridNLSampler.SampleResult(model, info)
+            return StrideHybridSolver.SampleResult(model, info)
 
         result = self._executor.submit(collect)
 
@@ -1068,3 +1074,5 @@ class LeapHybridNLSampler(_ScopedSamplerMixin):
             + offset,
             min_time_limit
         )
+
+LeapHybridNLSampler = StrideHybridSolver

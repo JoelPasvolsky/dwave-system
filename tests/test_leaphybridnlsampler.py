@@ -22,7 +22,7 @@ from dwave.cloud.computation import Future
 from dwave.cloud.solver import StructuredSolver, NLSolver
 from dwave.cloud.testing.mocks import qpu_pegasus_solver_data, hybrid_nl_solver_data
 
-from dwave.system import LeapHybridNLSampler
+from dwave.system import StrideHybridSolver
 
 
 class TestNLSampler(unittest.TestCase):
@@ -41,7 +41,7 @@ class TestNLSampler(unittest.TestCase):
 
     @unittest.mock.patch('dwave.system.samplers.leap_hybrid_sampler.Client', mock_client_factory)
     def test_solver_selection(self):
-        sampler = LeapHybridNLSampler()
+        sampler = StrideHybridSolver()
         self.assertIn("nl", sampler.properties.get('supported_problem_types', []))
 
     @unittest.mock.patch('dwave.system.samplers.leap_hybrid_sampler.Client', mock_client_factory)
@@ -49,7 +49,7 @@ class TestNLSampler(unittest.TestCase):
     @unittest.mock.patch('dwave.cloud.solver.NLSolver.upload_nlm')
     @unittest.mock.patch('dwave.cloud.solver.NLSolver.decode_response')
     def test_state_resolve(self, decode_response, upload_nlm, base_sample_problem):
-        sampler = LeapHybridNLSampler()
+        sampler = StrideHybridSolver()
 
         # create model
         model = Model()
@@ -116,7 +116,7 @@ class TestNLSampler(unittest.TestCase):
 
         with self.subTest('timing returned in sample result'):
             self.assertIsInstance(result, concurrent.futures.Future)
-            self.assertIsInstance(result.result(), LeapHybridNLSampler.SampleResult)
+            self.assertIsInstance(result.result(), StrideHybridSolver.SampleResult)
             self.assertEqual(result.result().info['timing'], mock_timing)
             # warnings separate from timing
             self.assertEqual(result.result().info['warnings'], mock_warnings)
@@ -142,13 +142,13 @@ class TestNLSampler(unittest.TestCase):
         mock_solver.supported_problem_types = ['nl']
 
         with self.subTest('manual close'):
-            sampler = LeapHybridNLSampler()
+            sampler = StrideHybridSolver()
             sampler.close()
             mock_client.from_config.return_value.close.assert_called_once()
 
         mock_client.reset_mock()
 
         with self.subTest('context manager'):
-            with LeapHybridNLSampler():
+            with StrideHybridSolver():
                 ...
             mock_client.from_config.return_value.close.assert_called_once()
