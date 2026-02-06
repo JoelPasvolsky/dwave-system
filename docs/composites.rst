@@ -18,16 +18,18 @@ Other Ocean packages provide additional composites; for example:
 *   :ref:`index_preprocessing` provides composites that clip, fix, and scale
     variables and apply spin-reversal transforms.
 
+
 CutOffs
 =======
 
 .. automodule:: dwave.system.composites.cutoffcomposite
 
+
 CutOffComposite
 ---------------
 
 .. autoclass:: CutOffComposite
-
+   :show-inheritance:
 
 Properties
 ~~~~~~~~~~
@@ -35,7 +37,6 @@ Properties
 .. autosummary::
    :toctree: generated/
 
-   CutOffComposite.child
    CutOffComposite.children
    CutOffComposite.parameters
    CutOffComposite.properties
@@ -47,13 +48,13 @@ Methods
    :toctree: generated/
 
    CutOffComposite.sample
-   CutOffComposite.sample_ising
-   CutOffComposite.sample_qubo
+
 
 PolyCutOffComposite
 -------------------
 
 .. autoclass:: PolyCutOffComposite
+   :show-inheritance:
 
 Properties
 ~~~~~~~~~~
@@ -61,7 +62,6 @@ Properties
 .. autosummary::
    :toctree: generated/
 
-   PolyCutOffComposite.child
    PolyCutOffComposite.children
    PolyCutOffComposite.parameters
    PolyCutOffComposite.properties
@@ -73,8 +73,6 @@ Methods
    :toctree: generated/
 
    PolyCutOffComposite.sample_poly
-   PolyCutOffComposite.sample_hising
-   PolyCutOffComposite.sample_hubo
 
 
 Embedding
@@ -86,20 +84,12 @@ Embedding
 
 .. currentmodule:: dwave.system.composites
 
+
 AutoEmbeddingComposite
 ----------------------
 
 .. autoclass:: AutoEmbeddingComposite
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   AutoEmbeddingComposite.child
-   AutoEmbeddingComposite.parameters
-   AutoEmbeddingComposite.properties
+   :show-inheritance:
 
 Methods
 ~~~~~~~
@@ -108,14 +98,13 @@ Methods
    :toctree: generated/
 
    AutoEmbeddingComposite.sample
-   AutoEmbeddingComposite.sample_ising
-   AutoEmbeddingComposite.sample_qubo
 
 
 EmbeddingComposite
 ------------------
 
 .. autoclass:: EmbeddingComposite
+   :show-inheritance:
 
 Properties
 ~~~~~~~~~~
@@ -123,7 +112,6 @@ Properties
 .. autosummary::
    :toctree: generated/
 
-   EmbeddingComposite.child
    EmbeddingComposite.children
    EmbeddingComposite.parameters
    EmbeddingComposite.properties
@@ -137,8 +125,6 @@ Methods
    :toctree: generated/
 
    EmbeddingComposite.sample
-   EmbeddingComposite.sample_ising
-   EmbeddingComposite.sample_qubo
 
 
 FixedEmbeddingComposite
@@ -147,36 +133,12 @@ FixedEmbeddingComposite
 .. autoclass:: FixedEmbeddingComposite
    :show-inheritance:
 
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   FixedEmbeddingComposite.adjacency
-   FixedEmbeddingComposite.child
-   FixedEmbeddingComposite.children
-   FixedEmbeddingComposite.edgelist
-   FixedEmbeddingComposite.nodelist
-   FixedEmbeddingComposite.parameters
-   FixedEmbeddingComposite.properties
-   FixedEmbeddingComposite.structure
-
-Methods
-~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   FixedEmbeddingComposite.sample
-   FixedEmbeddingComposite.sample_ising
-   FixedEmbeddingComposite.sample_qubo
-
 
 LazyFixedEmbeddingComposite
 ---------------------------
 
 .. autoclass:: LazyFixedEmbeddingComposite
+   :show-inheritance:
 
 Properties
 ~~~~~~~~~~
@@ -187,10 +149,8 @@ Properties
 
    LazyFixedEmbeddingComposite.adjacency
    LazyFixedEmbeddingComposite.edgelist
+   LazyFixedEmbeddingComposite.embedding
    LazyFixedEmbeddingComposite.nodelist
-   LazyFixedEmbeddingComposite.parameters
-   LazyFixedEmbeddingComposite.properties
-   LazyFixedEmbeddingComposite.structure
 
 Methods
 ~~~~~~~
@@ -199,14 +159,13 @@ Methods
    :toctree: generated/
 
    LazyFixedEmbeddingComposite.sample
-   LazyFixedEmbeddingComposite.sample_ising
-   LazyFixedEmbeddingComposite.sample_qubo
 
 
 ParallelEmbeddingComposite
 --------------------------
 
 .. autoclass:: ParallelEmbeddingComposite
+   :show-inheritance:
 
 Properties
 ~~~~~~~~~~
@@ -236,6 +195,7 @@ TilingComposite
 ---------------
 
 .. autoclass:: TilingComposite
+   :show-inheritance:
 
 Properties
 ~~~~~~~~~~
@@ -243,8 +203,6 @@ Properties
 .. autosummary::
    :toctree: generated/
 
-   TilingComposite.adjacency
-   TilingComposite.child
    TilingComposite.children
    TilingComposite.edgelist
    TilingComposite.embeddings
@@ -252,7 +210,6 @@ Properties
    TilingComposite.num_tiles
    TilingComposite.parameters
    TilingComposite.properties
-   TilingComposite.structure
 
 Methods
 ~~~~~~~
@@ -261,28 +218,13 @@ Methods
    :toctree: generated/
 
    TilingComposite.sample
-   TilingComposite.sample_ising
-   TilingComposite.sample_qubo
+
 
 VirtualGraphComposite
 ---------------------
 
 .. autoclass:: VirtualGraphComposite
-
-Properties
-~~~~~~~~~~
-
-.. autosummary::
-   :toctree: generated/
-
-   VirtualGraphComposite.adjacency
-   VirtualGraphComposite.child
-   VirtualGraphComposite.children
-   VirtualGraphComposite.edgelist
-   VirtualGraphComposite.nodelist
-   VirtualGraphComposite.parameters
-   VirtualGraphComposite.properties
-   VirtualGraphComposite.structure
+   :show-inheritance:
 
 Methods
 ~~~~~~~
@@ -291,8 +233,6 @@ Methods
    :toctree: generated/
 
    VirtualGraphComposite.sample
-   VirtualGraphComposite.sample_ising
-   VirtualGraphComposite.sample_qubo
 
 
 Linear Bias
@@ -306,6 +246,7 @@ LinearAncillaComposite
 -----------------------
 
 .. autoclass:: LinearAncillaComposite
+   :show-inheritance:
 
 Properties
 ~~~~~~~~~~
@@ -313,7 +254,6 @@ Properties
 .. autosummary::
    :toctree: generated/
 
-   LinearAncillaComposite.child
    LinearAncillaComposite.children
    LinearAncillaComposite.parameters
    LinearAncillaComposite.properties
@@ -325,8 +265,6 @@ Methods
    :toctree: generated/
 
    LinearAncillaComposite.sample
-   LinearAncillaComposite.sample_ising
-   LinearAncillaComposite.sample_qubo
 
 
 Reverse Anneal
@@ -339,7 +277,7 @@ ReverseBatchStatesComposite
 ---------------------------
 
 .. autoclass:: ReverseBatchStatesComposite
-
+   :show-inheritance:
 
 Properties
 ~~~~~~~~~~
@@ -347,7 +285,6 @@ Properties
 .. autosummary::
    :toctree: generated/
 
-   ReverseBatchStatesComposite.child
    ReverseBatchStatesComposite.children
    ReverseBatchStatesComposite.parameters
    ReverseBatchStatesComposite.properties
@@ -359,13 +296,13 @@ Methods
    :toctree: generated/
 
    ReverseBatchStatesComposite.sample
-   ReverseBatchStatesComposite.sample_ising
-   ReverseBatchStatesComposite.sample_qubo
+
 
 ReverseAdvanceComposite
 -----------------------
 
 .. autoclass:: ReverseAdvanceComposite
+   :show-inheritance:
 
 Properties
 ~~~~~~~~~~
@@ -373,7 +310,6 @@ Properties
 .. autosummary::
    :toctree: generated/
 
-   ReverseAdvanceComposite.child
    ReverseAdvanceComposite.children
    ReverseAdvanceComposite.parameters
    ReverseAdvanceComposite.properties
@@ -385,6 +321,5 @@ Methods
    :toctree: generated/
 
    ReverseAdvanceComposite.sample
-   ReverseAdvanceComposite.sample_ising
-   ReverseAdvanceComposite.sample_qubo
+
 
