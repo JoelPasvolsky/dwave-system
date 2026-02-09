@@ -92,7 +92,7 @@ class CutOffComposite(dimod.ComposedSampler):
 
     @property
     def children(self):
-        """list: List of child samplers that that are used by this composite."""
+        """list: Child samplers that that are used by this composite."""
         return self._children
 
     @property
@@ -248,7 +248,7 @@ class PolyCutOffComposite(dimod.ComposedPolySampler):
 
     Examples:
         This example removes one interaction, ``('a', 'c'): 0.2``, before
-        submitting the polynomial to child sampler
+        submitting the polynomial to the child sampler
         :class:`~dimod.reference.samplers.ExactSolver`.
 
         >>> import dimod
@@ -272,7 +272,7 @@ class PolyCutOffComposite(dimod.ComposedPolySampler):
 
     @property
     def children(self):
-        """list: List of child samplers that that are used by this composite."""
+        """list: Child samplers that that are used by this composite."""
         return self._children
 
     @property
