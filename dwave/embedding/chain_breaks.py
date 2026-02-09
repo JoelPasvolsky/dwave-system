@@ -30,19 +30,21 @@ __all__ = ['broken_chains',
 
 
 def broken_chains(samples, chains):
-    """Find the broken chains for the given samples.
+    r"""Find the broken chains for the given samples.
 
     Args:
         samples (|array-like|_):
-            Samples as a nS x nV |array-like|_ object where nS is the number of samples and nV is the
-            number of variables. The values should all be 0/1 or -1/+1.
+            Samples as an :math:`nS \times nV` |array-like|_ object where
+            :math:`nS` is the number of samples and :math:`nV` is the number of
+            variables. The values should all be :math:`0/1` or :math:`\pm 1`.
 
         chains (list[|array-like|_]):
-            List of chains of length nC where nC is the number of chains.
-            Each chain should be an |array-like|_ collection of column indices in samples.
+            Chains in a list of length :math:`nC` (the number of chains). Each
+            chain is an |array-like|_ collection of column indices in samples.
 
     Returns:
-        :obj:`numpy.ndarray`: A nS x nC boolean array. If i, j is True, then chain j in sample i is
+        :obj:`numpy.ndarray`: A :math:`nS \times nC` Boolean array. If element
+        :math:`i, j` is True, then chain :math:`j` in sample :math:`i` is
         broken.
 
     Examples:
@@ -54,7 +56,7 @@ def broken_chains(samples, chains):
         >>> dwave.embedding.broken_chains(samples, chains)
         array([[True, True],
                [ False,  False]])
-
+        ...
         >>> chains = [[0, 2], [1, 3]]
         >>> dwave.embedding.broken_chains(samples, chains)
         array([[False, False],
@@ -103,7 +105,7 @@ def discard(samples, chains):
 
         chains (list[|array-like|_]):
             List of chains, where each chain is an |array-like|_ collection of
-            the variables in the same order as their represention in the given
+            the variables in the same order as their representation in the given
             samples.
 
     Returns:
@@ -112,10 +114,10 @@ def discard(samples, chains):
             :obj:`numpy.ndarray`: Unembedded samples as an array of dtype 'int8'.
             Broken chains are discarded.
 
-            :obj:`numpy.ndarray`: Indicies of rows with unbroken chains.
+            :obj:`numpy.ndarray`: Indices of rows with unbroken chains.
 
     Examples:
-        This example unembeds two samples that chains nodes 0 and 1 to represent
+        This example unembeds two samples that chain nodes 0 and 1 to represent
         a single source node. The first sample has an unbroken chain, the second
         a broken chain.
 
@@ -154,7 +156,7 @@ def discard(samples, chains):
 
 
 def majority_vote(samples, chains):
-    """Unembed samples using the most common value for broken chains.
+    r"""Unembed samples using the most common value for broken chains.
 
     Args:
         samples (samples_like):
@@ -163,25 +165,27 @@ def majority_vote(samples, chains):
 
         chains (list[|array-like|_]):
             List of chains, where each chain is an |array-like|_ collection of
-            the variables in the same order as their represention in the given
+            the variables in the same order as their representation in the given
             samples.
 
     Returns:
         tuple: A 2-tuple containing:
 
-            :obj:`numpy.ndarray`: Unembedded samples as an nS-by-nC array of
-            dtype 'int8', where nC is the number of chains and nS the number
-            of samples. Broken chains are resolved by setting the sample value to
+            :obj:`numpy.ndarray`: Unembedded samples as an :math:`nS \times nC`
+            array of :ref:`dtype <numpy:arrays.dtypes>` ``int8``, where
+            :math:`nC` is the number of chains and :math:`nS` the number of
+            samples. Broken chains are resolved by setting the sample value to
             that of most the chain's elements or, for chains without a majority,
             an arbitrary value.
 
-            :obj:`numpy.ndarray`: Indicies of the samples. Equivalent to
+            :obj:`numpy.ndarray`: Indices of the samples. Equivalent to
             :code:`np.arange(nS)` because all samples are kept and none added.
 
     Examples:
-        This example unembeds samples from a target graph that chains nodes 0 and 1 to
-        represent one source node and nodes 2, 3, and 4 to represent another.
-        Both samples have one broken chain, with different majority values.
+        This example unembeds samples from a target graph that chains nodes 0
+        and 1 to represent one source node and nodes 2, 3, and 4 to represent
+        another. Both samples have one broken chain, with different majority
+        values.
 
         >>> import dimod
         >>> import numpy as np
@@ -225,7 +229,7 @@ def majority_vote(samples, chains):
 
 
 def weighted_random(samples, chains):
-    """Unembed samples using weighed random choice for broken chains.
+    r"""Unembed samples using weighed random choice for broken chains.
 
     Args:
         samples (samples_like):
@@ -234,25 +238,26 @@ def weighted_random(samples, chains):
 
         chains (list[|array-like|_]):
             List of chains, where each chain is an |array-like|_ collection of
-            the variables in the same order as their represention in the given
+            the variables in the same order as their representation in the given
             samples.
 
     Returns:
         tuple: A 2-tuple containing:
 
-            :obj:`numpy.ndarray`: Unembedded samples as an nS-by-nC array of
-            dtype 'int8', where nC is the number of chains and nS the number
-            of samples. Broken chains are resolved by setting the sample value to
+            :obj:`numpy.ndarray`: Unembedded samples as an :math:`nS \times nC`
+            array of :ref:`dtype <numpy:arrays.dtypes>` ``int8``, where
+            :math:`nC` is the number of chains and :math:`nS` the number of
+            samples. Broken chains are resolved by setting the sample value to
             a random value weighted by frequency of the value in the chain.
 
-            :obj:`numpy.ndarray`: Indicies of the samples. Equivalent to
+            :obj:`numpy.ndarray`: Indices of the samples. Equivalent to
             :code:`np.arange(nS)` because all samples are kept
             and no samples are added.
 
     Examples:
-        This example unembeds samples from a target graph that chains nodes 0 and 1 to
-        represent one source node and nodes 2, 3, and 4 to represent another.
-        The sample has broken chains for both source nodes.
+        This example unembeds samples from a target graph that chains nodes 0
+        and 1 to represent one source node and nodes 2, 3, and 4 to represent
+        another. The sample has broken chains for both source nodes.
 
         >>> import dimod
         >>> import numpy as np
@@ -285,18 +290,19 @@ class MinimizeEnergy(Callable):
     """Unembed samples by minimizing local energy for broken chains.
 
     Args:
-        bqm (:class:`~dimod.BinaryQuadraticModel`).
+        bqm (:class:`~dimod.binary.BinaryQuadraticModel`).
             Binary quadratic model associated with the source graph.
 
         embedding (dict):
-            Mapping from source graph to target graph as a dict of form {s: [t, ...], ...},
-            where s is a source-model variable and t is a target-model variable.
+            Mapping from source graph to target graph as a dict of form
+            ``{s: [t, ...], ...},`` where ``s`` is a source-model variable and
+            ``t`` is a target-model variable.
 
     Examples:
-        This example embeds from a triangular graph to a square graph,
-        chaining target-nodes 2 and 3 to represent source-node c, and unembeds minimizing the
-        energy for the samples. The first two sample have unbroken chains, the second two have
-        broken chains.
+        This example embeds from a triangular graph to a square graph, chaining
+        target-nodes 2 and 3 to represent source-node c, and unembeds minimizing
+        the energy for the samples. The first two sample have unbroken chains,
+        the second two have broken chains.
 
         >>> import dimod
         >>> import numpy as np
