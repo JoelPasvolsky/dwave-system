@@ -136,9 +136,8 @@ def effective_field(
         samples:
             Either a :class:`~dimod.SampleSet` or a ``samples_like`` object (an
             extension of the :std:doc:`NumPy <numpy:index>`
-            :term:`array_like <numpy:array_like>` structure); see
-            :func:`~dimod.as_samples`. By default, a single sample with all +1
-            assignments is used.
+            |array-like|_ structure); see :func:`~dimod.as_samples`. By default,
+            a single sample with all +1 assignments is used.
         current_state_energy:
             By default, returns the effective field (the energy contribution
             associated with a state assignment of 1). When set to ``True``,
@@ -754,8 +753,8 @@ def maximum_pseudolikelihood(
             model parameters :math:`x`.
         sampleset: Set of samples, as a :class:`~dimod.SampleSet` or a
             ``samples_like`` object (an extension of the
-            :std:doc:`NumPy <numpy:index>` :term:`array_like <numpy:array_like>`
-            structure); see :func:`~dimod.as_samples`.
+            :std:doc:`NumPy <numpy:index>` |array-like|_ structure); see
+            :func:`~dimod.as_samples`.
         num_bootstrap_samples: Number of bootstrap estimators to calculate.
             Bootstrapped estimates can be used to reliably estimate variance and
             bias if samples are uncorrelated. Currently supported for samplesets

@@ -12,7 +12,7 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-"""Unembedding samples with broken chains."""
+"""Unembedding samples with :term:`broken chains <broken chain>`."""
 
 from collections.abc import Callable
 from heapq import heapify, heappop
@@ -30,16 +30,16 @@ __all__ = ['broken_chains',
 
 
 def broken_chains(samples, chains):
-    """Find the broken chains.
+    """Find the broken chains for the given samples.
 
     Args:
-        samples (array_like):
-            Samples as a nS x nV array_like object where nS is the number of samples and nV is the
+        samples (|array-like|_):
+            Samples as a nS x nV |array-like|_ object where nS is the number of samples and nV is the
             number of variables. The values should all be 0/1 or -1/+1.
 
-        chains (list[array_like]):
+        chains (list[|array-like|_]):
             List of chains of length nC where nC is the number of chains.
-            Each chain should be an array_like collection of column indices in samples.
+            Each chain should be an |array-like|_ collection of column indices in samples.
 
     Returns:
         :obj:`numpy.ndarray`: A nS x nC boolean array. If i, j is True, then chain j in sample i is
@@ -80,7 +80,7 @@ def broken_chains(samples, chains):
         chain = np.asarray(chain)
 
         if chain.ndim > 1:
-            raise ValueError("chains should be 1D array_like objects")
+            raise ValueError("chains should be 1D array-like objects")
 
         # chains of length 1, or 0 cannot be broken
         if len(chain) <= 1:
@@ -99,10 +99,10 @@ def discard(samples, chains):
     Args:
         samples (samples_like):
             A collection of samples. `samples_like` is an extension of NumPy's
-            array_like. See :func:`dimod.as_samples`.
+            |array-like|_. See :func:`dimod.as_samples`.
 
-        chains (list[array_like]):
-            List of chains, where each chain is an array_like collection of
+        chains (list[|array-like|_]):
+            List of chains, where each chain is an |array-like|_ collection of
             the variables in the same order as their represention in the given
             samples.
 
@@ -159,10 +159,10 @@ def majority_vote(samples, chains):
     Args:
         samples (samples_like):
             A collection of samples. `samples_like` is an extension of NumPy's
-            array_like. See :func:`dimod.as_samples`.
+            |array-like|_. See :func:`dimod.as_samples`.
 
-        chains (list[array_like]):
-            List of chains, where each chain is an array_like collection of
+        chains (list[|array-like|_]):
+            List of chains, where each chain is an |array-like|_ collection of
             the variables in the same order as their represention in the given
             samples.
 
@@ -230,10 +230,10 @@ def weighted_random(samples, chains):
     Args:
         samples (samples_like):
             A collection of samples. `samples_like` is an extension of NumPy's
-            array_like. See :func:`dimod.as_samples`.
+            |array-like|_. See :func:`dimod.as_samples`.
 
-        chains (list[array_like]):
-            List of chains, where each chain is an array_like collection of
+        chains (list[|array-like|_]):
+            List of chains, where each chain is an |array-like|_ collection of
             the variables in the same order as their represention in the given
             samples.
 
@@ -333,11 +333,11 @@ class MinimizeEnergy(Callable):
         Args:
             samples (samples_like):
                 A collection of samples. `samples_like` is an extension of NumPy's
-                array_like. See :func:`dimod.as_samples`.
+                |array-like|_. See :func:`dimod.as_samples`.
 
-            chains (list[array_like]):
-                List of chains, where each chain is an array_like collection of
-                the variables in the same order as their represention in the given
+            chains (list[|array-like|_]):
+                List of chains, where each chain is an |array-like|_ collection of
+                the variables in the same order as their representation in the given
                 samples.
 
         Returns:

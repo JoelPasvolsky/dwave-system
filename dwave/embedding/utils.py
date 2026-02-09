@@ -155,8 +155,8 @@ def chain_break_frequency(samples_like, embedding):
 
     Args:
         samples_like (samples_like/:obj:`dimod.SampleSet`):
-            A collection of raw samples. 'samples_like' is an extension of NumPy's array_like.
-            See :func:`dimod.as_samples`.
+            A collection of raw samples. 'samples_like' is an extension of
+            NumPy's |array-like|_. See :func:`dimod.as_samples`.
 
         embedding (dict):
             Mapping from source graph to target graph as a dict of form {s: {t, ...}, ...},

@@ -80,6 +80,7 @@ Diagnostics
 .. autosummary::
    :toctree: generated/
 
+   broken_chains
    chain_break_frequency
    diagnose_embedding
    is_valid_embedding
