@@ -129,6 +129,9 @@ Diagnose Chains
 Handle Broken Chains
 --------------------
 
+.. automodule:: dwave.embedding.chain_breaks
+.. currentmodule:: dwave.embedding
+
 .. autosummary::
     :toctree: generated/
 

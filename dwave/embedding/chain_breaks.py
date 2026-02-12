@@ -50,17 +50,15 @@ def broken_chains(samples, chains):
     Examples:
 
         >>> import numpy as np
+        >>> from dwave.embedding import broken_chains
         ...
         >>> samples = np.array([[-1, +1, -1, +1], [-1, -1, +1, +1]], dtype=np.int8)
         >>> chains = [[0, 1], [2, 3]]
-        >>> dwave.embedding.broken_chains(samples, chains)
-        array([[True, True],
-               [ False,  False]])
-        ...
+        >>> broken_chains(samples, chains).tolist()      # tolist() for example formatting
+        [[True, True], [False, False]]
         >>> chains = [[0, 2], [1, 3]]
-        >>> dwave.embedding.broken_chains(samples, chains)
-        array([[False, False],
-               [ True,  True]])
+        >>> broken_chains(samples, chains).tolist()      # tolist() for example formatting
+        [[False, False], [True, True]]
 
     """
     samples, labels = dimod.as_samples(samples)

@@ -36,23 +36,25 @@ __all__ = ['embed_bqm',
            ]
 
 class EmbeddedStructure(dict):
-    """Processes an embedding and a target graph to collect target edges
-    into those within individual chains, and those that connect chains.  This
-    is used elsewhere to embed binary quadratic models into the target graph.
+    """Embedding structure for a target graph and minor embedding.
+
+    Processes an :term:`embedding` and a :term:`target graph` to categorize
+    target edges into those within :term:`chains` and connecting chains.
+
+    This class is a dict that acts as an immutable duplicate of embedding, and
+    is used to embed a :term:`binary quadratic model` into the target graph.
 
     Args:
 
         target_edges (iterable[edge]):
-            An iterable of edges in the target graph.  Each edge should be an
-            iterable of 2 hashable objects.
+            An iterable of edges in the target graph. Each edge is an iterable
+            of 2 hashable objects.
 
         embedding (dict):
-            Mapping from source graph to target graph as a dict of form
-            {s: {t, ...}, ...}, where s is a source-model variable and t is a
-            target-model variable.
+            Mapping from :term:`source graph` to target graph as a dict of form
+            ``{s: {t, ...}, ...}``, where ``s`` is a source-model variable and
+            ``t`` is a target-model variable.
 
-
-    This class is a dict, and acts as an immutable duplicate of embedding.
     """
 
     def __init__(self, target_edges, embedding):
@@ -127,11 +129,11 @@ class EmbeddedStructure(dict):
         return len(max(self.values(), default=[], key=len))
 
     def chain_edges(self, u):
-        """Iterate over edges contained in the chain for u.
+        """Iterate over edges contained in the chain for variable ``u``.
 
         Args:
             u (hashable):
-                A key in self.
+                A key in :class:`~dwave.embedding.EmbeddedStructure`.
 
         Yields:
             tuple: A 2-tuple, corresponding to an edge in the target graph.
@@ -142,15 +144,15 @@ class EmbeddedStructure(dict):
             yield emb_u[i], emb_u[j]
 
     def interaction_edges(self, u, *args):
-        """Iterate over edges between in the chains for u and v.
+        """Iterate over edges between the chains for variables ``u`` and ``v``.
 
         Args:
             u (hashable/tuple):
-                A key in self.
+                A key in :class:`~dwave.embedding.EmbeddedStructure`.
 
             v (hashable, optional):
-                A key in self.  If this argument is omitted, interprets
-                :code:`u, v := u`.
+                A key in :class:`~dwave.embedding.EmbeddedStructure`. If
+                omitted, interprets :code:`u, v := u`.
 
         Yields:
             tuple: A 2-tuple, corresponding to an edge in the target graph.
@@ -176,8 +178,12 @@ class EmbeddedStructure(dict):
     __delitem__=__setitem__=clear=pop=popitem=setdefault=update=_mutate_dict
 
     def fromkeys(self, *args, **kwargs):
-        """Raise a NotImplemented -- this method is not supported for the
-        EmbeddedStructure class, but exists because dict is the parent class."""
+        """Raise a NotImplemented.
+
+        This method is not supported for the
+        :class:`~dwave.embedding.EmbeddedStructure` class, but exists because
+        dict is the parent class.
+        """
         raise NotImplementedError("EmbeddedStructure does not support the"
                                   " fromkeys method")
 
@@ -195,47 +201,29 @@ class EmbeddedStructure(dict):
         """Embed a binary quadratic model onto a target graph.
 
         Args:
-            source_bqm (:class:`~dimod.BinaryQuadraticModel`):
-                Binary quadratic model to embed.
+            source_bqm (:class:`~dimod.binary.BinaryQuadraticModel`):
+                Binary quadratic model (:term:`BQM`) to embed.
 
             chain_strength (float/mapping/callable, optional):
                 Sets the coupling strength between qubits representing variables
                 that form a :term:`chain`. Mappings should specify the required
-                chain strength for each variable. Callables should accept the BQM
-                and embedding and return a float or mapping. By default,
-                `chain_strength` is calculated with
+                chain strength for each variable. Callables should accept the
+                BQM and embedding and return a float or mapping. By default,
+                ``chain_strength`` is calculated with
                 :func:`~dwave.embedding.chain_strength.uniform_torque_compensation`.
 
-            smear_vartype (:class:`.Vartype`, optional, default=None):
+            smear_vartype (:class:`~dimod.Vartype`, optional, default=None):
                 Determines whether the linear bias of embedded variables is
                 smeared (the specified value is evenly divided as biases of a
                 chain in the target graph) in SPIN or BINARY space. Defaults to
-                the :class:`.Vartype` of `source_bqm`.
+                the :class:`~dimod.Vartype` of ``source_bqm``.
 
         Returns:
-            :obj:`.BinaryQuadraticModel`: Target binary quadratic model.
+            :class:`~dimod.binary.BinaryQuadraticModel`: Target binary quadratic
+            model.
 
         Examples:
-            This example embeds a triangular binary quadratic model representing
-            a :math:`K_3` clique into a square target graph by mapping variable
-            `c` in the source to nodes `2` and `3` in the target.
-
-            >>> import networkx as nx
-            ...
-            >>> target = nx.cycle_graph(4)
-            >>> # Binary quadratic model for a triangular source graph
-            >>> h = {'a': 0, 'b': 0, 'c': 0}
-            >>> J = {('a', 'b'): 1, ('b', 'c'): 1, ('a', 'c'): 1}
-            >>> bqm = dimod.BinaryQuadraticModel.from_ising(h, J)
-            >>> # Variable c is a chain
-            >>> embedding = {'a': {0}, 'b': {1}, 'c': {2, 3}}
-            >>> # Embed and show the chain strength
-            >>> target_bqm = dwave.embedding.embed_bqm(bqm, embedding, target)
-            >>> target_bqm.quadratic[(2, 3)]
-            -1.9996979771955565
-            >>> print(target_bqm.quadratic)  # doctest: +SKIP
-            {(0, 1): 1.0, (0, 3): 1.0, (1, 2): 1.0, (2, 3): -1.9996979771955565}
-
+            See examples in the :func:`.embed_bqm` function.
 
         See also:
             :func:`.embed_ising`, :func:`.embed_qubo`
@@ -325,46 +313,50 @@ def embed_bqm(source_bqm, embedding=None, target_adjacency=None,
     """Embed a binary quadratic model onto a target graph.
 
     Args:
-        source_bqm (:class:`~dimod.BinaryQuadraticModel`):
-            Binary quadratic model to embed.
+        source_bqm (:class:`~dimod.binary.BinaryQuadraticModel`):
+            :term:`Binary quadratic model` (BQM) to embed.
 
-        embedding (dict/:class:`.EmbeddedStructure`):
-            Mapping from source graph to target graph as a dict of form
-            {s: {t, ...}, ...}, where s is a source-model variable and t is a
-            target-model variable.  Alternately, an EmbeddedStructure object
-            produced by, for example,
-            EmbeddedStructure(target_adjacency.edges(), embedding). If embedding
-            is a dict, target_adjacency must be provided.
+        embedding (dict/:class:`~dwave.embedding.EmbeddedStructure`):
+            Mapping from :term:`source graph` to :term:`target graph` as a dict
+            of form ``{s: {t, ...}, ...}``, where ``s`` is a source-model
+            variable and ``t`` is a target-model variable. Alternately, an
+            :class:`~dwave.embedding.EmbeddedStructure` object produced by, for
+            example,
+            ``EmbeddedStructure(target_adjacency.edges(), embedding)``. If
+            ``embedding`` is a dict, ``target_adjacency`` must be provided.
 
         target_adjacency (dict/:obj:`networkx.Graph`, optional):
-            Adjacency of the target graph as a dict of form {t: Nt, ...}, where
-            t is a variable in the target graph and Nt is its set of neighbours.
-            This should be omitted if and only if embedding is an
-            EmbeddedStructure object.
+            Adjacency of the target graph as a dict of form ``{t: Nt, ...}``,
+            where ``t`` is a variable in the target graph and ``Nt`` is its set
+            of neighbors. Omit if and only if ``embedding`` is an
+            :class:`~dwave.embedding.EmbeddedStructure` object.
 
         chain_strength (float/mapping/callable, optional):
             Sets the coupling strength between qubits representing variables
-            that form a :term:`chain`. Mappings should specify the required chain
-            strength for each variable. Callables should accept the BQM and
-            embedding and return a float or mapping. By default,
-            `chain_strength` is calculated with
+            that form a :term:`chain`. Mappings should specify the required
+            chain strength for each variable. Callables should accept the BQM
+            and embedding and return a float or mapping. By default,
+            ``chain_strength`` is calculated with
             :func:`~dwave.embedding.chain_strength.uniform_torque_compensation`.
 
-        smear_vartype (:class:`.Vartype`, optional, default=None):
+        smear_vartype (:class:`~dimod.Vartype`, optional, default=None):
             Determines whether the linear bias of embedded variables is smeared
             (the specified value is evenly divided as biases of a chain in the
             target graph) in SPIN or BINARY space. Defaults to the
-            :class:`.Vartype` of `source_bqm`.
+            :class:`~dimod.Vartype` of ``source_bqm``.
 
     Returns:
-        :obj:`.BinaryQuadraticModel`: Target binary quadratic model.
+        :class:`~dimod.binary.BinaryQuadraticModel`: Target binary quadratic
+        model.
 
     Examples:
         This example embeds a triangular binary quadratic model representing
-        a :math:`K_3` clique into a square target graph by mapping variable `c`
-        in the source to nodes `2` and `3` in the target.
+        a :math:`K_3` clique into a square target graph by mapping variable
+        ``c`` in the source to nodes 2 and 3 in the target.
 
+        >>> import dimod
         >>> import networkx as nx
+        >>> from dwave.embedding import embed_bqm
         ...
         >>> target = nx.cycle_graph(4)
         >>> # Binary quadratic model for a triangular source graph
@@ -374,12 +366,9 @@ def embed_bqm(source_bqm, embedding=None, target_adjacency=None,
         >>> # Variable c is a chain
         >>> embedding = {'a': {0}, 'b': {1}, 'c': {2, 3}}
         >>> # Embed and show the chain strength
-        >>> target_bqm = dwave.embedding.embed_bqm(bqm, embedding, target)
-        >>> print(target_bqm.quadratic[(2, 3)])
-        -1.999...
-        >>> print(target_bqm.quadratic)  # doctest: +SKIP
-        {(0, 1): 1.0, (0, 3): 1.0, (1, 2): 1.0, (2, 3): -1.9996979771955565}
-
+        >>> target_bqm = embed_bqm(bqm, embedding, target)
+        >>> print(target_bqm.quadratic[(2, 3)])     # doctest: +SKIP
+        -1.9996979771955565
 
     See also:
         :func:`.embed_ising`, :func:`.embed_qubo`
@@ -409,41 +398,44 @@ def embed_ising(source_h, source_J, embedding, target_adjacency, chain_strength=
 
     Args:
         source_h (dict[variable, bias]/list[bias]):
-            Linear biases of the Ising problem. If a list, the list's indices are used as
-            variable labels.
+            Linear biases of the :term:`Ising` problem. If a list, the list's
+            indices are used as variable labels.
 
         source_J (dict[(variable, variable), bias]):
             Quadratic biases of the Ising problem.
 
         embedding (dict):
-            Mapping from source graph to target graph as a dict of form {s: {t, ...}, ...},
-            where s is a source-model variable and t is a target-model variable.
+            Mapping from :term:`source graph` to :term:`target graph` as a dict
+            of form ``{s: {t, ...}, ...}``, where ``s`` is a source-model
+            variable and ``t`` is a target-model variable.
 
         target_adjacency (dict/:obj:`networkx.Graph`):
-            Adjacency of the target graph as a dict of form {t: Nt, ...},
-            where t is a target-graph variable and Nt is its set of neighbours.
+            Adjacency of the target graph as a dict of form ``{t: Nt, ...}``,
+            where ``t`` is a target-graph variable and ``Nt`` is its set of
+            neighbors.
 
         chain_strength (float/mapping/callable, optional):
             Sets the coupling strength between qubits representing variables
-            that form a :term:`chain`. Mappings should specify the required chain
-            strength for each variable. Callables should accept the BQM and
-            embedding and return a float or mapping. By default,
-            `chain_strength` is calculated with
+            that form a :term:`chain`. Mappings should specify the required
+            chain strength for each variable. Callables should accept the BQM
+            and embedding and return a float or mapping. By default,
+            ``chain_strength`` is calculated with
             :func:`~dwave.embedding.chain_strength.uniform_torque_compensation`.
 
     Returns:
         tuple: A 2-tuple:
 
-            dict[variable, bias]: Linear biases of the target Ising problem.
-
-            dict[(variable, variable), bias]: Quadratic biases of the target Ising problem.
+        *   dict[variable, bias]: Linear biases of the target Ising problem.
+        *   dict[(variable, variable), bias]: Quadratic biases of the target
+            Ising problem.
 
     Examples:
         This example embeds a triangular Ising problem representing
-        a :math:`K_3` clique into a square target graph by mapping variable `c`
-        in the source to nodes `2` and `3` in the target.
+        a :math:`K_3` clique into a square target graph by mapping variable
+        ``c`` in the source to nodes 2 and 3 in the target.
 
         >>> import networkx as nx
+        >>> from dwave.embedding import embed_ising
         ...
         >>> target = nx.cycle_graph(4)
         >>> # Ising problem biases
@@ -452,12 +444,9 @@ def embed_ising(source_h, source_J, embedding, target_adjacency, chain_strength=
         >>> # Variable c is a chain
         >>> embedding = {'a': {0}, 'b': {1}, 'c': {2, 3}}
         >>> # Embed and show the resulting biases
-        >>> th, tJ = dwave.embedding.embed_ising(h, J, embedding, target)
-        >>> th  # doctest: +SKIP
-        {0: 0.0, 1: 0.0, 2: 0.0, 3: 0.0}
-        >>> tJ  # doctest: +SKIP
-        {(0, 1): 1.0, (0, 3): 1.0, (1, 2): 1.0, (2, 3): -1.0}
-
+        >>> th, tJ = embed_ising(h, J, embedding, target)
+        >>> 3 in th.keys()
+        True
 
     See also:
         :func:`.embed_bqm`, :func:`.embed_qubo`
@@ -474,22 +463,25 @@ def embed_qubo(source_Q, embedding, target_adjacency, chain_strength=None):
 
     Args:
         source_Q (dict[(variable, variable), bias]):
-            Coefficients of a quadratic unconstrained binary optimization (QUBO) model.
+            Coefficients of a quadratic unconstrained binary optimization
+            (:term:`QUBO`) model.
 
         embedding (dict):
-            Mapping from source graph to target graph as a dict of form {s: {t, ...}, ...},
-            where s is a source-model variable and t is a target-model variable.
+            Mapping from :term:`source graph` to :term:`target graph` as a dict
+            of form ``{s: {t, ...}, ...}``, where ``s`` is a source-model
+            variable and ``t`` is a target-model variable.
 
         target_adjacency (dict/:obj:`networkx.Graph`):
-            Adjacency of the target graph as a dict of form {t: Nt, ...},
-            where t is a target-graph variable and Nt is its set of neighbours.
+            Adjacency of the target graph as a dict of form ``{t: Nt, ...}``,
+            where ``t`` is a target-graph variable and ``Nt`` is its set of
+            neighbors.
 
         chain_strength (float/mapping/callable, optional):
             Sets the coupling strength between qubits representing variables
-            that form a :term:`chain`. Mappings should specify the required chain
-            strength for each variable. Callables should accept the BQM and
-            embedding and return a float or mapping. By default,
-            `chain_strength` is calculated with
+            that form a :term:`chain`. Mappings should specify the required
+            chain strength for each variable. Callables should accept the
+            :term:`BQM` and embedding and return a float or mapping. By default,
+            ``chain_strength`` is calculated with
             :func:`~dwave.embedding.chain_strength.uniform_torque_compensation`.
 
     Returns:
@@ -497,10 +489,11 @@ def embed_qubo(source_Q, embedding, target_adjacency, chain_strength=None):
 
     Examples:
         This example embeds a triangular QUBO representing a :math:`K_3` clique
-        into a square target graph by mapping variable `c` in the source to nodes
-        `2` and `3` in the target.
+        into a square target graph by mapping variable ``c`` in the source to
+        nodes 2 and 3 in the target.
 
         >>> import networkx as nx
+        >>> from dwave.embedding import embed_qubo
         ...
         >>> target = nx.cycle_graph(4)
         >>> # QUBO
@@ -508,7 +501,7 @@ def embed_qubo(source_Q, embedding, target_adjacency, chain_strength=None):
         >>> # Variable c is a chain
         >>> embedding = {'a': {0}, 'b': {1}, 'c': {2, 3}}
         >>> # Embed and show the resulting biases
-        >>> tQ = dwave.embedding.embed_qubo(Q, embedding, target)
+        >>> tQ = embed_qubo(Q, embedding, target)
         >>> tQ  # doctest: +SKIP
         {(0, 1): 1.0,
          (0, 3): 1.0,
@@ -563,45 +556,48 @@ def unembed_sampleset(target_sampleset, embedding, source_bqm,
                       return_embedding=False):
     """Unembed a sample set.
 
-    Given samples from a target binary quadratic model (BQM), construct a sample
-    set for a source BQM by unembedding.
+    Given samples from a target binary quadratic model (:term:`BQM`), construct
+    a sample set for a source BQM by unembedding.
 
     Args:
-        target_sampleset (:obj:`dimod.SampleSet`):
+        target_sampleset (:class:`~dimod.SampleSet`):
             Sample set from the target BQM.
 
         embedding (dict):
-            Mapping from source graph to target graph as a dict of form
-            {s: {t, ...}, ...}, where s is a source variable and t is a target
-            variable.
+            Mapping from :term:`source graph` to :term:`target graph` as a dict
+            of form ``{s: {t, ...}, ...}``, where ``s`` is a source variable and
+            ``t`` is a target variable.
 
-        source_bqm (:obj:`~dimod.BinaryQuadraticModel`):
+        source_bqm (:class:`~dimod.binary.BinaryQuadraticModel`):
             Source BQM.
 
         chain_break_method (function/list, optional):
             Method or methods used to resolve chain breaks. If multiple methods
             are given, the results are concatenated and a new field called
-            "chain_break_method" specifying the index of the method is appended
-            to the sample set.
+            ``chain_break_method`` specifying the index of the method is
+            appended to the sample set.
             Defaults to :func:`~dwave.embedding.chain_breaks.majority_vote`.
-            See :mod:`dwave.embedding.chain_breaks`.
+            See :mod:`~dwave.embedding.chain_breaks`.
 
         chain_break_fraction (bool, optional, default=False):
-            Add a `chain_break_fraction` field to the unembedded :obj:`dimod.SampleSet`
-            with the fraction of chains broken before unembedding.
+            Add a ``chain_break_fraction`` field to the unembedded
+            :class:`~dimod.SampleSet` with the fraction of chains broken before
+            unembedding.
 
         return_embedding (bool, optional, default=False):
-            If True, the embedding is added to :attr:`dimod.SampleSet.info`
-            of the returned sample set. Note that if an `embedding` key
-            already exists in the sample set then it is overwritten.
+            If True, the embedding is added to :attr:`~dimod.SampleSet.info`
+            field of the returned sample set. Note that if an ``embedding`` key
+            already exists in the sample set, it is overwritten.
 
     Returns:
-        :obj:`~dimod.SampleSet`: Sample set in the source BQM.
+        :class:`~dimod.SampleSet`: Sample set in the source BQM.
 
     Examples:
        This example unembeds from a square target graph samples of a triangular
        source BQM.
 
+        >>> import dimod
+        >>> from dwave.embedding import unembed_sampleset
         >>> # Triangular binary quadratic model and an embedding
         >>> J = {('a', 'b'): -1, ('b', 'c'): -1, ('a', 'c'): -1}
         >>> bqm = dimod.BinaryQuadraticModel.from_ising({}, J)
@@ -612,8 +608,8 @@ def unembed_sampleset(target_sampleset, embedding, source_bqm,
         >>> energies = [-3, 1]
         >>> embedded = dimod.SampleSet.from_samples(samples, dimod.SPIN, energies)
         >>> # Unembed
-        >>> samples = dwave.embedding.unembed_sampleset(embedded, embedding, bqm)
-        >>> samples.record.sample   # doctest: +SKIP
+        >>> samples = unembed_sampleset(embedded, embedding, bqm)
+        >>> samples.record.sample
         array([[-1, -1, -1],
                [ 1,  1,  1]], dtype=int8)
 

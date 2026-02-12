@@ -12,25 +12,7 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-"""Utility functions for calculating chain strength.
-
-Examples:
-    This example uses :func:`uniform_torque_compensation`, given a prefactor of 3,
-    to calculate a chain strength that :class:`EmbeddingComposite` then uses.
-
-    >>> import numpy as np
-    >>> from functools import partial
-    >>> from dwave.system import EmbeddingComposite, DWaveSampler
-    >>> from dwave.embedding.chain_strength import uniform_torque_compensation
-    ...
-    >>> Q = np.triu(np.ones((5, 5)))        # K5 with all biases set to 1.0
-    >>> sampler = EmbeddingComposite(DWaveSampler())
-    >>> # partial() can be used when the BQM or embedding is not accessible
-    >>> chain_strength = partial(uniform_torque_compensation, prefactor=3)
-    >>> sampleset = sampler.sample_qubo(Q, chain_strength=chain_strength, return_embedding=True)
-    >>> sampleset.info['embedding_context']['chain_strength']
-    1.5
-
+"""Utility functions for calculating :term:`chain strength`.
 """
 import math
 import numpy as np
@@ -38,10 +20,11 @@ import numpy as np
 __all__ = ['uniform_torque_compensation', 'scaled']
 
 def uniform_torque_compensation(bqm, embedding=None, prefactor=1.414):
-    r"""Chain strength that attempts to compensate for chain-breaking torque.
+    r"""Set chain strength to compensate for chain-breaking torque.
 
     The problem's connectivity\ [#]_ and quadratic biases are used to calculate
-    a value of chain strength that preforms reasonably well on many problems.
+    a value of :term:`chain strength` that preforms reasonably well on many
+    problems.
 
     As the quantum annealing progresses, and the amplitude of the transverse
     field (:math:`A(s)` in the :ref:`qpu_qa_implementation` section) decreases,
@@ -77,19 +60,37 @@ def uniform_torque_compensation(bqm, embedding=None, prefactor=1.414):
         the problem).
 
     Args:
-        bqm (:obj:`.BinaryQuadraticModel`):
+        bqm (:class:`~dimod.binary.BinaryQuadraticModel`):
             A binary quadratic model.
 
-        embedding (dict/:class:`.EmbeddedStructure`, default=None):
-            Included to satisfy the `chain_strength` callable specifications
-            for `embed_bqm`.
+        embedding (dict/:class:`~dwave.embedding.EmbeddedStructure`, default=None):
+            Included to satisfy the ``chain_strength`` callable specifications
+            for the :func:`~dwave.embedding.embed_bqm` function.
 
         prefactor (float, optional, default=1.414):
-            Prefactor used for scaling. For non-pathological problems, the recommended
-            range of prefactors to try is [0.5, 2].
+            Prefactor used for scaling. For non-pathological problems, the
+            recommended range of prefactors to try is :math:`[0.5, 2]`.
 
     Returns:
         float: The chain strength, or 1 if chain strength is not applicable.
+
+    Examples:
+        This example uses :func:`uniform_torque_compensation`, given a prefactor
+        of 3, to calculate a chain strength that the
+        :class:`~dwave.system.composites.EmbeddingComposite` class then uses.
+
+        >>> import numpy as np
+        >>> from functools import partial
+        >>> from dwave.system import EmbeddingComposite, DWaveSampler
+        >>> from dwave.embedding.chain_strength import uniform_torque_compensation
+        ...
+        >>> Q = np.triu(np.ones((5, 5)))        # K5 with all biases set to 1.0
+        >>> sampler = EmbeddingComposite(DWaveSampler())
+        >>> # partial() can be used when the BQM or embedding is not accessible
+        >>> chain_strength = partial(uniform_torque_compensation, prefactor=3)
+        >>> sampleset = sampler.sample_qubo(Q, chain_strength=chain_strength, return_embedding=True)
+        >>> sampleset.info['embedding_context']['chain_strength']
+        1.5
 
     """
     num_interactions = bqm.num_interactions
@@ -109,21 +110,29 @@ def uniform_torque_compensation(bqm, embedding=None, prefactor=1.414):
     return 1
 
 def scaled(bqm, embedding=None, prefactor=1.0):
-    """Chain strength that is scaled to the problem bias range.
+    """Set chain strength that is scaled to the problem's bias range.
 
     Args:
-        bqm (:obj:`.BinaryQuadraticModel`):
+        bqm (:class:`~dimod.binary.BinaryQuadraticModel`):
             A binary quadratic model.
 
-        embedding (dict/:class:`.EmbeddedStructure`, default=None):
-            Included to satisfy the `chain_strength` callable specifications
-            for `embed_bqm`.
+        embedding (dict/:class:`~dwave.embedding.EmbeddedStructure`, default=None):
+            Included to satisfy the ``chain_strength`` callable specifications
+            for the :func:`~dwave.embedding.embed_bqm` function.
 
         prefactor (float, optional, default=1.0):
             Prefactor used for scaling.
 
     Returns:
-        float: The chain strength, or 1 if chain strength is not applicable.
+        float: Chain strength, or 1 if chain strength is not applicable.
+
+    Examples:
+        >>> import dimod
+        >>> from dwave.embedding.chain_strength import scaled
+        ...
+        >>> bqm = dimod.BinaryQuadraticModel({'a': -1.7, 'b': 1.2}, {('a', 'b'): 0.5}, 0, dimod.SPIN)
+        >>> print(scaled(bqm, prefactor=2))
+        3.4
 
     """
     if bqm.num_interactions > 0:
