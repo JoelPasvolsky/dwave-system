@@ -4,10 +4,10 @@
 Samplers
 ========
 
-A :term:`sampler` accepts a problem in :term:`quadratic model` (e.g., BQM, CQM) or
-:term:`nonlinear model` format and returns variable assignments.
-Samplers generally try to find minimizing values but can also sample from
-distributions defined by the problem.
+A :term:`sampler` accepts a problem in :term:`nonlinear model` or
+:term:`quadratic model` (e.g., :term:`BQM`) format and returns variable
+assignments. Samplers generally try to find minimizing values but can also
+sample from distributions defined by the problem.
 
 .. currentmodule:: dwave.system.samplers
 
@@ -35,19 +35,17 @@ DWaveSampler
 Properties
 ~~~~~~~~~~
 
-For parameters and properties of D-Wave systems, see the
-:ref:`qpu_index_solver_properties` and :ref:`qpu_solver_parameters` sections.
-
 .. autosummary::
     :toctree: generated/
 
-    ~DWaveSampler.adjacency
     ~DWaveSampler.edgelist
     ~DWaveSampler.nodelist
     ~DWaveSampler.parameters
     ~DWaveSampler.properties
-    ~DWaveSampler.structure
     ~DWaveSampler.warnings_default
+
+See also inherited properties of the
+:class:`~dwave.system.samplers.DWaveSampler` class.
 
 Methods
 ~~~~~~~
@@ -56,20 +54,19 @@ Methods
     :toctree: generated/
 
     ~DWaveSampler.close
-    ~DWaveSampler.remove_unknown_kwargs
     ~DWaveSampler.sample
-    ~DWaveSampler.sample_ising
-    ~DWaveSampler.sample_qubo
     ~DWaveSampler.to_networkx_graph
     ~DWaveSampler.trigger_failover
-    ~DWaveSampler.valid_bqm_graph
     ~DWaveSampler.validate_anneal_schedule
 
+See also inherited methods of the
+:class:`~dwave.system.samplers.DWaveSampler` class.
 
 DWaveCliqueSampler
 ------------------
 
 .. autoclass:: DWaveCliqueSampler
+    :show-inheritance:
 
 Properties
 ~~~~~~~~~~
@@ -84,6 +81,9 @@ Properties
     ~DWaveCliqueSampler.qpu_quadratic_range
     ~DWaveCliqueSampler.target_graph
 
+See also inherited properties of the
+:class:`~dwave.system.samplers.DWaveCliqueSampler` class.
+
 Methods
 ~~~~~~~
 
@@ -93,12 +93,11 @@ Methods
     ~DWaveCliqueSampler.clique
     ~DWaveCliqueSampler.close
     ~DWaveCliqueSampler.largest_clique
-    ~DWaveCliqueSampler.remove_unknown_kwargs
     ~DWaveCliqueSampler.sample
-    ~DWaveCliqueSampler.sample_ising
-    ~DWaveCliqueSampler.sample_qubo
     ~DWaveCliqueSampler.trigger_failover
 
+See also inherited methods of the
+:class:`~dwave.system.samplers.DWaveCliqueSampler` class.
 
 Stride Hybrid Solver
 ====================
@@ -147,6 +146,7 @@ LeapHybridSampler
 -----------------
 
 .. autoclass:: LeapHybridSampler
+    :show-inheritance:
 
 Properties
 ~~~~~~~~~~
@@ -158,6 +158,9 @@ Properties
     ~LeapHybridSampler.parameters
     ~LeapHybridSampler.properties
 
+See also inherited properties of the
+:class:`~dwave.system.samplers.LeapHybridSampler` class.
+
 Methods
 ~~~~~~~
 
@@ -166,11 +169,10 @@ Methods
 
     ~LeapHybridSampler.close
     ~LeapHybridSampler.min_time_limit
-    ~LeapHybridSampler.remove_unknown_kwargs
     ~LeapHybridSampler.sample
-    ~LeapHybridSampler.sample_ising
-    ~LeapHybridSampler.sample_qubo
 
+See also inherited methods of the
+:class:`~dwave.system.samplers.LeapHybridSampler` class.
 
 LeapHybridCQMSampler
 --------------------
@@ -218,6 +220,5 @@ Methods
 .. autosummary::
     :toctree: generated/
 
-    ~LeapHybridDQMSampler.close
     ~LeapHybridDQMSampler.min_time_limit
     ~LeapHybridDQMSampler.sample_dqm

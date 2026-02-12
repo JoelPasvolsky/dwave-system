@@ -202,8 +202,8 @@ class DWaveCliqueSampler(dimod.Sampler):
         configuration file or as environment variables, as described in
         the :ref:`ocean_sapi_access_basic` section.
 
-        >>> from dwave.system import DWaveCliqueSampler
         >>> import dimod
+        >>> from dwave.system import DWaveCliqueSampler
         ...
         >>> bqm = dimod.generators.ran_r(1, 6)
         ...
@@ -236,6 +236,16 @@ class DWaveCliqueSampler(dimod.Sampler):
 
     @property
     def parameters(self) -> dict:
+        """Supported parameters.
+
+        Keys of the returned dict are keyword parameters as returned by a
+        :term:`SAPI` query.
+
+        Solver parameters are dependent on the selected solver and subject to
+        change; for example, new features may add parameters. The
+        :ref:`qpu_index_solver_properties` and :ref:`qpu_solver_parameters`
+        sections describe the parameters and properties supported on D-Wave
+        quantum computers."""
         try:
             return self._parameters
         except AttributeError:
@@ -252,6 +262,14 @@ class DWaveCliqueSampler(dimod.Sampler):
 
     @property
     def properties(self) -> dict:
+        """Solver properties as returned by a :term:`SAPI` query.
+
+        Solver properties are dependent on the selected solver and subject to
+        change; for example, new features may add properties. The
+        :ref:`qpu_index_solver_properties` and :ref:`qpu_solver_parameters`
+        sections describe the parameters and properties supported on D-Wave
+        quantum computers.
+        """
         try:
             return self._properties
         except AttributeError:
@@ -406,6 +424,9 @@ class DWaveCliqueSampler(dimod.Sampler):
         Returns:
             :class:`~dimod.SampleSet`: Sample set constructed from a
             (non-blocking) :class:`~concurrent.futures.Future`-like object.
+
+        Examples:
+            See examples for the :class:`.DWaveCliqueSampler` class.
 
         """
 

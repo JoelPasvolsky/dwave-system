@@ -119,8 +119,8 @@ def discard(samples, chains):
         a single source node. The first sample has an unbroken chain, the second
         a broken chain.
 
-        >>> import dimod
         >>> import numpy as np
+        >>> import dimod
         ...
         >>> chains = [(0, 1), (2,)]
         >>> samples = np.array([[1, 1, 0], [1, 0, 0]], dtype=np.int8)
@@ -185,8 +185,8 @@ def majority_vote(samples, chains):
         another. Both samples have one broken chain, with different majority
         values.
 
-        >>> import dimod
         >>> import numpy as np
+        >>> import dimod
         ...
         >>> chains = [(0, 1), (2, 3, 4)]
         >>> samples = np.array([[1, 1, 0, 0, 1], [1, 1, 1, 0, 1]], dtype=np.int8)
@@ -257,8 +257,8 @@ def weighted_random(samples, chains):
         and 1 to represent one source node and nodes 2, 3, and 4 to represent
         another. The sample has broken chains for both source nodes.
 
-        >>> import dimod
         >>> import numpy as np
+        >>> import dimod
         ...
         >>> chains = [(0, 1), (2, 3, 4)]
         >>> samples = np.array([[1, 0, 1, 0, 1]], dtype=np.int8)
@@ -302,8 +302,8 @@ class MinimizeEnergy(Callable):
         the energy for the samples. The first two sample have unbroken chains,
         the second two have broken chains.
 
-        >>> import dimod
         >>> import numpy as np
+        >>> import dimod
         ...
         >>> h = {'a': 0, 'b': 0, 'c': 0}
         >>> J = {('a', 'b'): 1, ('b', 'c'): 1, ('a', 'c'): 1}

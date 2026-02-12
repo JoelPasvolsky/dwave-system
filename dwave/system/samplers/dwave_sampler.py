@@ -45,13 +45,13 @@ __all__ = ['DWaveSampler', 'qpu_graph']
 def qpu_graph(topology_type, topology_shape, nodelist, edgelist):
     """Convert node and edge lists to a ``dwave-networkx`` graph.
 
-    Creates a QPU topology (Chimera, Pegasus or Zephyr) graph compatible with
-    Ocean software's :ref:`index_dnx`.
+    Creates a QPU :term:`topology` (Chimera, Pegasus or Zephyr) graph compatible
+    with Ocean software's :ref:`index_dnx`.
 
     Args:
         topology_type (string):
-            Type of lattice. Valid strings are `chimera`, `pegasus` and
-            `zephyr`.
+            Type of lattice. Valid strings are ``'chimera'``, ``'pegasus'`` and
+            ``'zephyr'``.
         topology_shape(iterable of ints):
             Dimensions of the lattice.
         nodelist (list of ints):
@@ -289,12 +289,10 @@ class DWaveSampler(dimod.Sampler, dimod.Structured):
 
     @property
     def parameters(self):
-        """dict[str, list]: Solver parameters as returned by a :term:`SAPI`
-        query.
+        """dict[str, list]: Supported parameters.
 
-        Keys of the returned dict are keyword parameters accepted by a SAPI
-        query and values are lists of properties in
-        :attr:`~DWaveSampler.properties` for each key.
+        Keys of the returned dict are keyword parameters as returned by a
+        :term:`SAPI` query.
 
         Solver parameters are dependent on the selected solver and subject to
         change; for example, new features may add parameters. The

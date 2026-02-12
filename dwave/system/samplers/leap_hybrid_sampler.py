@@ -156,11 +156,10 @@ class LeapHybridSampler(_ScopedSamplerMixin, dimod.Sampler):
 
     @property
     def parameters(self) -> Dict[str, list]:
-        """Solver parameters as returned by a :term:`SAPI` query.
+        """Supported parameters.
 
-        Keys of the returned dict are keyword parameters accepted by a SAPI
-        query and values are lists of properties in
-        :attr:`~dwave.system.samplers.LeapHybridSampler.properties` for each key.
+        Keys of the returned dict are keyword parameters as returned by a
+        :term:`SAPI` query.
 
         :ref:`Solver parameters <opt_solver_bqm_properties>`
         are dependent on the selected solver and subject to change; for example,
@@ -649,12 +648,10 @@ class LeapHybridCQMSampler(_ScopedSamplerMixin):
 
     @property
     def parameters(self) -> Dict[str, List[str]]:
-        """Solver parameters as returned by a :term:`SAPI` query.
+        """Supported parameters.
 
-        Keys of the returned dict are keyword parameters accepted by a SAPI
-        query and values are lists of properties in
-        :attr:`~dwave.system.samplers.LeapHybridCQMSampler.properties` for each
-        key.
+        Keys of the returned dict are keyword parameters as returned by a
+        :term:`SAPI` query.
 
         :ref:`Solver parameters <opt_solver_cqm_properties>` are dependent on
         the selected solver and subject to change; for example, new features may
@@ -940,12 +937,10 @@ class StrideHybridSolver(_ScopedSamplerMixin):
 
     @property
     def parameters(self) -> Dict[str, List[str]]:
-        """Solver parameters as returned by a :term:`SAPI` query.
+        """Supported parameters.
 
-        Keys of the returned dict are keyword parameters accepted by a SAPI
-        query and values are lists of properties in
-        :attr:`~dwave.system.samplers.StrideHybridSolver.properties` for each
-        key.
+        Keys of the returned dict are keyword parameters as returned by a
+        :term:`SAPI` query.
 
         :ref:`Solver parameters <opt_solver_nl_properties>` are dependent on
         the selected solver and subject to change; for example, new features may
@@ -991,6 +986,9 @@ class StrideHybridSolver(_ScopedSamplerMixin):
                 Named tuple, in a Future, containing the nonlinear model and
                 general result information such as timing and the identity of
                 the problem data.
+
+        Examples:
+            See examples for the :class:`.StrideHybridSolver` class.
 
         .. versionchanged:: 1.31.0
             The return value includes timing information as part of the ``info``

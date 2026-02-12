@@ -28,7 +28,7 @@ extensions = [
 autosummary_generate = True
 
 # The suffix(es) of source filenames.
-source_suffix = '.rst'
+source_suffix = {'.rst': 'restructuredtext'}
 
 master_doc = 'index'
 

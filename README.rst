@@ -18,15 +18,15 @@ dwave-system
 
 .. start_system_about
 
-``dwave-system`` is a basic API for easily incorporating the D-Wave system as a
-sampler in the
+``dwave-system`` is an API for easily incorporating D-Wave quantum computers as
+a sampler in the
 `Ocean software stack <https://docs.dwavequantum.com/en/latest/ocean/stack.html>`_,
-directly or through `Leap <https://cloud.dwavesys.com/leap/>`_ service's
+directly or through the `Leap <https://cloud.dwavesys.com/leap/>`_ service's
 cloud-based hybrid solvers. It includes ``DWaveSampler``, a dimod sampler that
 accepts and passes system parameters such as system identification and
-authentication down the stack, ``LeapHybridSampler``, for Leap's hybrid solvers,
-and others. It also includes several useful composites---layers of pre- and
-post-processing---that can be used with ``DWaveSampler`` to handle
+authentication down the stack, ``StrideHybridSolver``, for Leap's Stride™ hybrid
+solver, and others. It also includes several useful composites---layers of pre-
+and post-processing---that can be used with ``DWaveSampler`` to handle
 minor-embedding, optimize chain strength, etc.
 
 .. end_system_about
