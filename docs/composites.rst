@@ -41,6 +41,9 @@ Properties
    CutOffComposite.parameters
    CutOffComposite.properties
 
+See also inherited properties of the
+:class:`~dwave.system.composites.cutoffcomposite` class.
+
 Methods
 ~~~~~~~
 
@@ -49,6 +52,8 @@ Methods
 
    CutOffComposite.sample
 
+See also inherited methods of the
+:class:`~dwave.system.composites.cutoffcomposite` class.
 
 PolyCutOffComposite
 -------------------
@@ -66,6 +71,9 @@ Properties
    PolyCutOffComposite.parameters
    PolyCutOffComposite.properties
 
+See also inherited properties of the
+:class:`~dwave.system.composites.PolyCutOffComposite` class.
+
 Methods
 ~~~~~~~
 
@@ -74,6 +82,8 @@ Methods
 
    PolyCutOffComposite.sample_poly
 
+See also inherited methods of the
+:class:`~dwave.system.composites.PolyCutOffComposite` class.
 
 Embedding
 =========
@@ -99,6 +109,8 @@ Methods
 
    AutoEmbeddingComposite.sample
 
+See also inherited properties and methods of the
+:class:`~dwave.system.composites.embedding.AutoEmbeddingComposite` class.
 
 EmbeddingComposite
 ------------------
@@ -118,6 +130,9 @@ Properties
    EmbeddingComposite.return_embedding_default
    EmbeddingComposite.warnings_default
 
+See also inherited properties of the
+:class:`~dwave.system.composites.embedding.EmbeddingComposite` class.
+
 Methods
 ~~~~~~~
 
@@ -126,6 +141,8 @@ Methods
 
    EmbeddingComposite.sample
 
+See also inherited methods of the
+:class:`~dwave.system.composites.embedding.EmbeddingComposite` class.
 
 FixedEmbeddingComposite
 -----------------------
@@ -133,6 +150,8 @@ FixedEmbeddingComposite
 .. autoclass:: FixedEmbeddingComposite
    :show-inheritance:
 
+See also inherited properties and methods of the
+:class:`~dwave.system.composites.embedding.FixedEmbeddingComposite` class.
 
 LazyFixedEmbeddingComposite
 ---------------------------
@@ -152,6 +171,9 @@ Properties
    LazyFixedEmbeddingComposite.embedding
    LazyFixedEmbeddingComposite.nodelist
 
+See also inherited properties of the
+:class:`~dwave.system.composites.embedding.LazyFixedEmbeddingComposite` class.
+
 Methods
 ~~~~~~~
 
@@ -160,6 +182,8 @@ Methods
 
    LazyFixedEmbeddingComposite.sample
 
+See also inherited methods of the
+:class:`~dwave.system.composites.embedding.LazyFixedEmbeddingComposite` class.
 
 ParallelEmbeddingComposite
 --------------------------
@@ -182,6 +206,9 @@ Properties
    ParallelEmbeddingComposite.parameters
    ParallelEmbeddingComposite.properties
 
+See also inherited properties of the
+:class:`~dwave.system.composites.ParallelEmbeddingComposite` class.
+
 Methods
 ~~~~~~~
 
@@ -190,6 +217,9 @@ Methods
 
    ParallelEmbeddingComposite.sample
    ParallelEmbeddingComposite.sample_multiple
+
+See also inherited methods of the
+:class:`~dwave.system.composites.ParallelEmbeddingComposite` class.
 
 TilingComposite
 ---------------
