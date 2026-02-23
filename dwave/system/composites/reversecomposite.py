@@ -76,8 +76,8 @@ class ReverseAdvanceComposite(dimod.ComposedSampler):
         self._children = [child_sampler]
 
     @property
-    def children(self):
-        """list: Child samplers that that are used by this composite."""
+    def children(self) -> list:
+        """Child samplers that are used by this composite."""
         return self._children
 
     @property
@@ -91,8 +91,8 @@ class ReverseAdvanceComposite(dimod.ComposedSampler):
         return param
 
     @property
-    def properties(self):
-        """dict: Properties of the child sampler."""
+    def properties(self) -> dict:
+        """Properties of the child sampler."""
         return {'child_properties': self.child.properties.copy()}
 
     def sample(self, bqm, anneal_schedules=None, **parameters):
@@ -239,8 +239,8 @@ class ReverseBatchStatesComposite(dimod.ComposedSampler, dimod.Initialized):
         self._children = [child_sampler]
 
     @property
-    def children(self):
-        """list: Child samplers that that are used by this composite."""
+    def children(self) -> list:
+        """Child samplers that are used by this composite."""
         return self._children
 
     @property
@@ -254,8 +254,8 @@ class ReverseBatchStatesComposite(dimod.ComposedSampler, dimod.Initialized):
         return param
 
     @property
-    def properties(self):
-        """dict: Properties of the child sampler."""
+    def properties(self) -> dict:
+        """Properties of the child sampler."""
         return {'child_properties': self.child.properties.copy()}
 
     def sample(self, bqm, initial_states=None, initial_states_generator='random', num_reads=None,
