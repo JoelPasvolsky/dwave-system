@@ -92,7 +92,7 @@ class CutOffComposite(dimod.ComposedSampler):
 
     @property
     def children(self):
-        """list: Child samplers that that are used by this composite."""
+        """list: Child samplers that are used by this composite."""
         return self._children
 
     @property
