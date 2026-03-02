@@ -178,7 +178,7 @@ class EmbeddedStructure(dict):
     __delitem__=__setitem__=clear=pop=popitem=setdefault=update=_mutate_dict
 
     def fromkeys(self, *args, **kwargs):
-        """Raise a NotImplemented.
+        """Raise a :exc:`NotImplementedError`.
 
         This method is not supported for the
         :class:`~dwave.embedding.EmbeddedStructure` class, but exists because

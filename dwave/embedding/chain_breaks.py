@@ -43,7 +43,7 @@ def broken_chains(samples, chains):
             chain is an |array-like|_ collection of column indices in samples.
 
     Returns:
-        :obj:`numpy.ndarray`: A :math:`nS \times nC` Boolean array. If element
+        :class:`numpy.ndarray`: A :math:`nS \times nC` Boolean array. If element
         :math:`i, j` is True, then chain :math:`j` in sample :math:`i` is
         broken.
 
@@ -112,7 +112,7 @@ def discard(samples, chains):
             :obj:`numpy.ndarray`: Unembedded samples as an array of dtype 'int8'.
             Broken chains are discarded.
 
-            :obj:`numpy.ndarray`: Indices of rows with unbroken chains.
+            :class:`numpy.ndarray`: Indices of rows with unbroken chains.
 
     Examples:
         This example unembeds two samples that chain nodes 0 and 1 to represent
