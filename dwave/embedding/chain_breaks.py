@@ -109,7 +109,7 @@ def discard(samples, chains):
     Returns:
         tuple: A 2-tuple containing:
 
-            :obj:`numpy.ndarray`: Unembedded samples as an array of dtype 'int8'.
+            :class:`numpy.ndarray`: Unembedded samples as an array of dtype 'int8'.
             Broken chains are discarded.
 
             :class:`numpy.ndarray`: Indices of rows with unbroken chains.
@@ -169,14 +169,14 @@ def majority_vote(samples, chains):
     Returns:
         tuple: A 2-tuple containing:
 
-            :obj:`numpy.ndarray`: Unembedded samples as an :math:`nS \times nC`
+            :class:`numpy.ndarray`: Unembedded samples as an :math:`nS \times nC`
             array of :ref:`dtype <numpy:arrays.dtypes>` ``int8``, where
             :math:`nC` is the number of chains and :math:`nS` the number of
             samples. Broken chains are resolved by setting the sample value to
             that of most the chain's elements or, for chains without a majority,
             an arbitrary value.
 
-            :obj:`numpy.ndarray`: Indices of the samples. Equivalent to
+            :class:`numpy.ndarray`: Indices of the samples. Equivalent to
             :code:`np.arange(nS)` because all samples are kept and none added.
 
     Examples:
@@ -242,13 +242,13 @@ def weighted_random(samples, chains):
     Returns:
         tuple: A 2-tuple containing:
 
-            :obj:`numpy.ndarray`: Unembedded samples as an :math:`nS \times nC`
+            :class:`numpy.ndarray`: Unembedded samples as an :math:`nS \times nC`
             array of :ref:`dtype <numpy:arrays.dtypes>` ``int8``, where
             :math:`nC` is the number of chains and :math:`nS` the number of
             samples. Broken chains are resolved by setting the sample value to
             a random value weighted by frequency of the value in the chain.
 
-            :obj:`numpy.ndarray`: Indices of the samples. Equivalent to
+            :class:`numpy.ndarray`: Indices of the samples. Equivalent to
             :code:`np.arange(nS)` because all samples are kept
             and no samples are added.
 
@@ -347,11 +347,11 @@ class MinimizeEnergy(Callable):
         Returns:
             tuple: A 2-tuple containing:
 
-                :obj:`numpy.ndarray`: Unembedded samples as an nS-by-nC array of
+                :class:`numpy.ndarray`: Unembedded samples as an nS-by-nC array of
                 dtype 'int8', where nC is the number of chains and nS the number
                 of samples. Broken chains are resolved by greedy energy descent.
 
-                :obj:`numpy.ndarray`: Indicies of the samples. Equivalent to
+                :class:`numpy.ndarray`: Indicies of the samples. Equivalent to
                 :code:`np.arange(nS)` because all samples are kept and none added.
 
         """

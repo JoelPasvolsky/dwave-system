@@ -52,8 +52,8 @@ def target_to_source(target_adjacency, embedding):
         >>> target_adjacency = {0: {1, 3}, 1: {0, 2}, 2: {1, 3}, 3: {0, 2}}  # a square graph
         >>> embedding = {'a': {0}, 'b': {1}, 'c': {2, 3}}
         >>> source_adjacency = target_to_source(target_adjacency, embedding)
-        >>> source_adjacency
-        {'a': {'b', 'c'}, 'b': {'a', 'c'}, 'c': {'a', 'b'}}
+        >>> source_adjacency == {'a': {'b', 'c'}, 'b': {'a', 'c'}, 'c': {'a', 'b'}}
+        True
 
         This example inputs a NetworkX graph.
 
