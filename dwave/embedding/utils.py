@@ -21,6 +21,7 @@ from dwave.embedding.chain_breaks import broken_chains
 __all__ = ['target_to_source',
            'chain_to_quadratic',
            'chain_break_frequency',
+           'edgelist_to_adjacency',
            'adjacency_to_edges']
 
 
@@ -29,34 +30,38 @@ def target_to_source(target_adjacency, embedding):
 
     Args:
         target_adjacency (dict/:class:`networkx.Graph`):
-            A dict of the form {v: Nv, ...} where v is a node in the target graph and Nv is the
-            neighbors of v as an iterable. This can also be a networkx graph.
+            Target adjacency as a dict of form ``{v: Nv, ...}`` where ``v`` is a
+            node in the :term:`target graph` and ``Nv`` is the neighbors of
+            ``v`` as an iterable; or a :std:doc:`NetworkX <networkx:index>`
+            graph.
 
         embedding (dict):
-            A mapping from a source graph to a target graph.
+            Mapping from a :term:`source graph` to a target graph.
 
     Returns:
-        dict: The adjacency of the source graph.
+        dict: Adjacency of the source graph.
 
     Raises:
-        ValueError: If any node in the target_adjacency is assigned more
-            than  one node in the source graph by embedding.
+        ValueError: If any node in the target_adjacency is assigned more than
+            one node in the source graph by embedding.
 
     Examples:
 
+        >>> from dwave.embedding import target_to_source
+        ...
         >>> target_adjacency = {0: {1, 3}, 1: {0, 2}, 2: {1, 3}, 3: {0, 2}}  # a square graph
         >>> embedding = {'a': {0}, 'b': {1}, 'c': {2, 3}}
-        >>> source_adjacency = dwave.embedding.target_to_source(target_adjacency, embedding)
-        >>> # triangle graph:
-        >>> source_adjacency   # doctest: +SKIP
-        {'a': {'b', 'c'}, 'b': {'a', 'c'}, 'c': {'a', 'b'}}
+        >>> source_adjacency = target_to_source(target_adjacency, embedding)
+        >>> source_adjacency == {'a': {'b', 'c'}, 'b': {'a', 'c'}, 'c': {'a', 'b'}}
+        True
 
-        This function also works with networkx graphs.
+        This example inputs a NetworkX graph.
 
         >>> import networkx as nx
+        ...
         >>> target_graph = nx.complete_graph(5)
         >>> embedding = {'a': {0, 1, 2}, 'b': {3, 4}}
-        >>> dwave.embedding.target_to_source(target_graph, embedding)   # doctest: +SKIP
+        >>> target_to_source(target_graph, embedding)
         {'a': {'b'}, 'b': {'a'}}
 
     """
@@ -99,26 +104,30 @@ def chain_to_quadratic(chain, target_adjacency, chain_strength):
 
     Args:
         chain (iterable):
-            The variables that make up a chain.
+            The variables that make up a :term:`chain`.
 
         target_adjacency (dict/:class:`networkx.Graph`):
-            Should be a dict of the form {s: Ns, ...} where s is a variable
-            in the target graph and Ns is the set of neighbours of s.
+            Target adjacency as a dict of form ``{s: Ns, ...}``, where ``s`` is
+            a variable in the :term:`target graph` and ``Ns`` is the set of
+            neighbors of ``s``; or a :std:doc:`NetworkX <networkx:index>` graph.
 
         chain_strength (float):
-            The magnitude of the quadratic bias that should be used to create chains.
+            Magnitude of the quadratic bias that should be used to create
+            chains.
 
     Returns:
         dict[edge, float]: The quadratic biases that induce the given chain.
 
     Raises:
-        ValueError: If the variables in chain do not form a connected subgraph of target.
+        ValueError: If the variables in chain do not form a connected subgraph
+            of the target.
 
     Examples:
 
+        >>> from dwave.embedding import chain_to_quadratic
         >>> chain = {1, 2}
         >>> target_adjacency = {0: {1, 2}, 1: {0, 2}, 2: {0, 1}}
-        >>> dimod.embedding.chain_to_quadratic(chain, target_adjacency, 1)
+        >>> chain_to_quadratic(chain, target_adjacency, 1)
         {(1, 2): -1}
 
     """
@@ -155,22 +164,24 @@ def chain_break_frequency(samples_like, embedding):
 
     Args:
         samples_like (samples_like/:obj:`dimod.SampleSet`):
-            A collection of raw samples. 'samples_like' is an extension of NumPy's array_like.
-            See :func:`dimod.as_samples`.
+            A collection of raw samples. ``samples_like`` is an extension of
+            NumPy's |array-like|_. See :func:`dimod.as_samples`.
 
         embedding (dict):
-            Mapping from source graph to target graph as a dict of form {s: {t, ...}, ...},
-            where s is a source-model variable and t is a target-model variable.
+            Mapping from :term:`source graph` to :term:`target graph` as a dict
+            of form ``{s: {t, ...}, ...}``, where ``s`` is a source-model
+            variable and ``t`` is a target-model variable.
 
     Returns:
-        dict: Frequency of chain breaks as a dict in the form {s: f, ...},  where s
-        is a variable in the source graph and float f the fraction
-        of broken chains.
+        dict: Frequency of chain breaks as a dict in the form ``{s: f, ...}``,
+        where ``s`` is a variable in the source graph and float ``f`` the
+        fraction of broken chains.
 
     Examples:
-        This example embeds a single source node, 'a', as a chain of two target nodes (0, 1)
-        and uses :func:`.chain_break_frequency` to show that out of two synthetic samples,
-        one ([-1, +1]) represents a broken chain.
+        This example embeds a single source node, :math:`a`, as a chain of two
+        target nodes :math:`(0, 1)` and uses :func:`.chain_break_frequency` to
+        show that out of two synthetic samples, :math:`[-1, +1]` represents a
+        broken chain.
 
         >>> import numpy as np
         ...
@@ -205,15 +216,15 @@ def chain_break_frequency(samples_like, embedding):
 
 
 def edgelist_to_adjacency(edgelist):
-    """Converts an iterator of edges to an adjacency dict.
+    """Convert an iterator of edges to an adjacency dict.
 
     Args:
         edgelist (iterable):
             An iterator over 2-tuples where each 2-tuple is an edge.
 
     Returns:
-        dict: The adjacency dict. A dict of the form `{v: Nv, ...}` where `v` is
-        a node in a graph and `Nv` is the neighbors of `v` as an set.
+        dict: The adjacency dict in the form ``{v: Nv, ...}`` where ``v`` is
+        a node in a graph and ``Nv`` is the neighbors of ``v`` as an set.
 
     """
     adjacency = dict()
@@ -229,15 +240,17 @@ def edgelist_to_adjacency(edgelist):
     return adjacency
 
 def adjacency_to_edges(adjacency):
-    """Converts an adjacency dict, networkx graph, or bqm to an edge iterator.
+    """Convert an adjacency object to an edge iterator.
 
     Args:
         adjacency (dict/:class:`networkx.Graph`/:class:`dimod.BQM`):
-            Should be a dict of the form {s: Ns, ...} where s is a variable
-            in the graph and Ns is the set of neighbours of s.
+            Adjacency object as a dict of form ``{s: Ns, ...}``, where ``s`` is
+            a variable in the graph and ``Ns`` is the set of neighbors of ``s``;
+            or a :std:doc:`NetworkX <networkx:index>` graph; or a
+            :term:`binary quadratic model`.
 
     Yields:
-        tuple: A 2-tuple, corresponding to an edge in the provided graph
+        tuple: A 2-tuple, corresponding to an edge in the provided graph.
 
     """
     if hasattr(adjacency, 'edges'):
@@ -258,7 +271,7 @@ def adjacency_to_edges(adjacency):
                         "Mapping, networkx.Graph or dimod.BQM")
 
 class intlabel_disjointsets:
-    """A disjoint sets implementation with size and path-halving, for graphs 
+    """A disjoint sets implementation with size and path-halving, for graphs
     labeled [0, ..., n-1]
 
     Args:

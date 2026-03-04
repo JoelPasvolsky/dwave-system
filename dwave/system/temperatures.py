@@ -136,9 +136,8 @@ def effective_field(
         samples:
             Either a :class:`~dimod.SampleSet` or a ``samples_like`` object (an
             extension of the :std:doc:`NumPy <numpy:index>`
-            :term:`array_like <numpy:array_like>` structure); see
-            :func:`~dimod.as_samples`. By default, a single sample with all +1
-            assignments is used.
+            |array-like|_ structure); see :func:`~dimod.as_samples`. By default,
+            a single sample with all +1 assignments is used.
         current_state_energy:
             By default, returns the effective field (the energy contribution
             associated with a state assignment of 1). When set to ``True``,
@@ -149,7 +148,7 @@ def effective_field(
     Returns:
         samples_like:
             A tuple of the effective fields and the variable labels. Effective
-            fields are returned as a :obj:`numpy.ndarray` object and variable
+            fields are returned as a :class:`numpy.ndarray` object and variable
             labels are returned as a list. Rows index samples and columns index
             variables in the order returned by variable labels.
 
@@ -229,7 +228,7 @@ def background_susceptibility_ising(
 
     Returns:
         Couplings and scalar constant as a tuple. If :math:`h` and :math:`J` are
-        of type :obj:`numpy.ndarray`, returned fields and couplings are too;
+        of type :class:`numpy.ndarray`, returned fields and couplings are too;
         otherwise returns a tuple of dictionaries.
 
     Examples:
@@ -413,8 +412,8 @@ def maximum_pseudolikelihood_temperature(
         sampleset (:class:`~dimod.SampleSet` or ``samples_like`` as described in the :func:`~dimod.as_samples` function, optional):
             A set of samples, assumed to be fairly sampled from a Boltzmann
             distribution characterized by ``bqm``.
-        en1 (:obj:`numpy.ndarray` object, optional):
-            Effective fields as an :obj:`numpy.ndarray` object (site labels not
+        en1 (:class:`numpy.ndarray` object, optional):
+            Effective fields as an :class:`numpy.ndarray` object (site labels not
             required). If not provided, derived from the ``bqm`` and
             ``sampleset`` parameters. First dimension indexes samples and second
             dimension indexes sites. Ordering does not matter but should be
@@ -754,8 +753,8 @@ def maximum_pseudolikelihood(
             model parameters :math:`x`.
         sampleset: Set of samples, as a :class:`~dimod.SampleSet` or a
             ``samples_like`` object (an extension of the
-            :std:doc:`NumPy <numpy:index>` :term:`array_like <numpy:array_like>`
-            structure); see :func:`~dimod.as_samples`.
+            :std:doc:`NumPy <numpy:index>` |array-like|_ structure); see
+            :func:`~dimod.as_samples`.
         num_bootstrap_samples: Number of bootstrap estimators to calculate.
             Bootstrapped estimates can be used to reliably estimate variance and
             bias if samples are uncorrelated. Currently supported for samplesets

@@ -4,9 +4,10 @@
 Utilities
 =========
 
-.. todo:: add dwave_sampler.qpu_graph post https://github.com/dwavesystems/dwave-system/pull/585
+General Utilities
+-----------------
 
-.. automodule:: dwave.system.utilities
+.. automodule:: dwave.system
 
 .. currentmodule:: dwave.system
 
@@ -17,6 +18,7 @@ Utilities
    ~utilities.common_working_graph
    ~coupling_groups.coupling_groups
    ~utilities.energy_scales_custom_schedule
+   ~samplers.qpu_graph
 
 Temperature and Unit-Conversion Utilities
 -----------------------------------------

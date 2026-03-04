@@ -19,26 +19,29 @@ from dwave_networkx import chimera_graph, draw_chimera
 __all__ = ['draw_chimera_bqm']
 
 def draw_chimera_bqm(bqm, width=None, height=None):
-    """Draws a Chimera Graph representation of a Binary Quadratic Model.
-
-    If cell width and height not provided assumes square cell dimensions.
-    Throws an error if drawing onto a Chimera graph of the given dimensions fails.
+    """Represent a binary quadratic model as a Chimera graph.
 
     Args:
-        bqm (:obj:`dimod.BinaryQuadraticModel`):
-            Should be equivalent to a Chimera graph or a subgraph of a Chimera graph produced by dnx.chimera_graph.
-            The nodes and edges should have integer variables as in the dnx.chimera_graph.
+        bqm (:class:`~dimod.binary.BinaryQuadraticModel`):
+            Binary quadratic model equivalent to a Chimera graph or subgraph
+            produced by :func:`~dwave_networkx.chimera_graph`, with nodes and
+            edges labeled as integers.
         width (int, optional):
-            An integer representing the number of cells of the Chimera graph will be in width.
+            Number of cells for the graph width. If ``width`` and ``height`` are
+            not specified, assumes square cell dimensions.
         height (int, optional):
-            An integer representing the number of cells of the Chimera graph will be in height.
+            Number of cells for the graph height. If ``width`` and ``height`` are
+            not specified, assumes square cell dimensions.
 
     Examples:
-        >>> from dwave.embedding.drawing import draw_chimera_bqm
         >>> from dimod import BinaryQuadraticModel
-        >>> Q={(0, 0): 2, (1, 1): 1, (2, 2): 0, (3, 3): -1, (4, 4): -2, (5, 5): -2, (6, 6): -2, (7, 7): -2,
-        ... (0, 4): 2, (0, 4): -1, (1, 7): 1, (1, 5): 0, (2, 5): -2, (2, 6): -2, (3, 4): -2, (3, 7): -2}
-        >>> draw_chimera_bqm(BinaryQuadraticModel.from_qubo(Q), width=1, height=1)
+        >>> from dwave.embedding.drawing import draw_chimera_bqm
+        ...
+        >>> Q = {(0, 0): 2, (1, 1): 1, (2, 2): 0, (3, 3): -1, (4, 4): -2,
+        ...      (5, 5): -2, (6, 6): -2, (7, 7): -2, (0, 4): 2, (0, 4): -1,
+        ...      (1, 7): 1, (1, 5): 0, (2, 5): -2, (2, 6): -2, (3, 4): -2,
+        ...      (3, 7): -2}
+        >>> draw_chimera_bqm(BinaryQuadraticModel.from_qubo(Q), width=1, height=1)  # doctest: +SKIP
 
     """
 
